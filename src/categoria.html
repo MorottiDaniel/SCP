@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente</title>
+    <title>Categoria</title>
     <link rel="stylesheet" href="/src/css/styles.css">
 </head>
 
@@ -19,7 +19,7 @@
             <div class="dropdown" id="cadastro">
                 <a href="/src/cliente.html">Clientes</a>
                 <a href="/src/categoria.html">Categorias</a>
-                <a href="/src/produto.html">Produtos</a>
+                <a href="#">Produtos</a>
             </div>
         </div>
 
@@ -39,32 +39,18 @@
     <main class="pagina-cadastro">
         <div class="area-formularios">
             <form class="formulario">
-                <h1>Cadastro de Cliente</h1>
+                <h1>Cadastro de Categoria</h1>
 
                 <div class="linha">
                     <div class="campo">
                         <label for="id">ID</label>
                         <input type="text" id="id" name="id" disabled>
                     </div>
-
-                    <div class="campo">
-                        <label for="tipoCliente">Tipo de Cliente</label>
-                        <select id="tipoCliente" name="tipoCliente">
-                            <option value="">Selecione</option>
-                            <option value="fisica">Pessoa fisica</option>
-                            <option value="juridica">Pessoa juridica</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="campo">
-                    <label for="cpfCnpj">CPF/CNPJ</label>
-                    <input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Digite o CPF ou CNPJ" required>
-                </div>
-
-                <div class="campo">
-                    <label for="nomeCliente">Nome do Cliente</label>
-                    <input type="text" id="nomeCliente" name="nomeCliente" placeholder="Digite o nome do cliente" required>
+                    <label for="descricaoCategorias">Descrição da categoria</label>
+                    <input type="text" id="descricaoCategorias" name="descricaoCategorias" placeholder="Digite a descrição" required>
                 </div>
 
                 <div class="botoes">
@@ -74,32 +60,18 @@
             </form>
 
             <form class="formulario">
-                <h1>Pesquisar Cliente</h1>
+                <h1>Pesquisar Categoria</h1>
 
                 <div class="linha">
                     <div class="campo">
                         <label for="pesquisarCodigo">Pesquisar por ID</label>
                         <input type="text" id="pesquisarCodigo" name="pesquisarCodigo" placeholder="Digite o ID">
                     </div>
-
-                    <div class="campo">
-                        <label for="pesquisarTipo">Pesquisar por tipo</label>
-                        <select id="pesquisarTipo" name="pesquisarTipo">
-                            <option value="">Selecione</option>
-                            <option value="fisica">Pessoa fisica</option>
-                            <option value="juridica">Pessoa juridica</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="campo">
-                    <label for="pesquisarCpfCnpj">Pesquisar por CPF/CNPJ</label>
-                    <input type="text" id="pesquisarCpfCnpj" name="pesquisarCpfCnpj" placeholder="Digite o CPF ou CNPJ">
-                </div>
-
-                <div class="campo">
-                    <label for="pesquisarNome">Pesquisar por nome</label>
-                    <input type="text" id="pesquisarNome" name="pesquisarNome" placeholder="Digite o nome do cliente">
+                    <label for="pesquisarDescricao">Pesquisar por descrição</label>
+                    <input type="text" id="pesquisarDescricao" name="pesquisarDescricao" placeholder="Digite a descrição">
                 </div>
 
                 <div class="botoes">
@@ -110,23 +82,19 @@
         </div>
 
         <section class="lista-dados">
-            <h1>Lista de Clientes</h1>
+            <h1>Lista de Categoria</h1>
 
             <table>
                 <thead>
                     <tr>
-                        <th>Codigo</th>
-                        <th>Tipo</th>
-                        <th>CPF/CNPJ</th>
-                        <th>Nome</th>
+                        <th>ID</th>
+                        <th>Descrição</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Pessoa fisica</td>
-                        <td>000.000.000-00</td>
                         <td>Cliente exemplo</td>
                         <td>
                             <button class="btn-editar">Editar</button>

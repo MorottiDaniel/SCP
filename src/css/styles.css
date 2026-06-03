@@ -64,28 +64,33 @@ body {
   margin: 30px auto;
 }
 
-.cliente-page {
+.pagina-cadastro {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
     padding: 30px 40px;
 }
 
-.formularios {
+.area-formularios {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    flex: 0 0 500px;
+    min-width: 320px;
 }
 
-.form-cliente {
-    width: 500px;
+.formulario {
+    width: 100%;
+    min-width: 320px;
     padding: 30px;
     border: 1px solid #cccccc;
     border-radius: 8px;
+    box-sizing: border-box;
 }
 
-.form-cliente h1 {
+.formulario h1 {
     margin-top: 0;
     text-align: center;
     font-size: 22px;
@@ -137,8 +142,9 @@ body {
     color: white;
 }
 
-.lista-clientes {
-    flex: 1;
+.lista-dados {
+    flex: 1 1 520px;
+    min-width: 520px;
     padding: 30px;
     border: 1px solid #cccccc;
     border-radius: 8px;
@@ -146,26 +152,39 @@ body {
     box-sizing: border-box;
 }
 
-.lista-clientes h1 {
+.lista-dados h1 {
     margin-top: 0;
     text-align: center;
     font-size: 22px;
 }
 
-.lista-clientes table {
+.lista-dados table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.lista-clientes th,
-.lista-clientes td {
+.lista-dados th,
+.lista-dados td {
     padding: 10px;
     border: 1px solid #cccccc;
     text-align: left;
 }
 
-.lista-clientes th {
+.lista-dados th {
     background-color: #eeeeee;
+}
+
+.lista-dados th:last-child,
+.lista-dados td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+@media (max-width: 1120px) {
+    .area-formularios {
+        flex: 1 1 100%;
+        width: 100%;
+    }
 }
 
 .btn-editar,
@@ -183,4 +202,27 @@ body {
 
 .btn-excluir {
     background-color: #d12a4b;
+}
+
+@media (max-width: 700px) {
+    .pagina-cadastro {
+        padding: 20px;
+    }
+
+    .area-formularios,
+    .formulario {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .lista-dados {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .linha {
+        flex-direction: column;
+        gap: 0;
+    }
 }

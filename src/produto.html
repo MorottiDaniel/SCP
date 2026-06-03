@@ -11,7 +11,7 @@
 <body>
 
     <nav class="navbar">
-        <div class="menu-item" >
+        <div class="menu-item">
             <button class="menu-button" onclick="abrirDropdown('cadastro')">
                 Cadastro
             </button>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="menu-item" >
+        <div class="menu-item">
             <button class="menu-button" onclick="abrirDropdown('vendas')">
                 Vendas
             </button>
@@ -39,7 +39,7 @@
     <main class="pagina-cadastro">
         <div class="area-formularios">
             <form class="formulario">
-                <h1>Cadastro de Cliente</h1>
+                <h1>Cadastro de Produto</h1>
 
                 <div class="linha">
                     <div class="campo">
@@ -48,58 +48,95 @@
                     </div>
 
                     <div class="campo">
-                        <label for="tipoCliente">Tipo de Cliente</label>
-                        <select id="tipoCliente" name="tipoCliente">
-                            <option value="">Selecione</option>
-                            <option value="fisica">Pessoa fisica</option>
-                            <option value="juridica">Pessoa juridica</option>
+                        <label for="idCategoria">ID categoria</label>
+                        <input type="text" id="idCategoria" name="idCategoria" disabled>
                         </select>
                     </div>
                 </div>
 
                 <div class="campo">
-                    <label for="cpfCnpj">CPF/CNPJ</label>
-                    <input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Digite o CPF ou CNPJ" required>
+                    <label for="descrição">Descrição</label>
+                    <input type="text" id="descrição" name="descrição" placeholder="Digite a descrição" required>
                 </div>
 
                 <div class="campo">
-                    <label for="nomeCliente">Nome do Cliente</label>
-                    <input type="text" id="nomeCliente" name="nomeCliente" placeholder="Digite o nome do cliente" required>
+                    <label for="observacao">Observação</label>
+                    <input type="text" id="observacao" name="observacao" placeholder="Digite a observação" required>
+                </div>
+
+                <div class="campo">
+                    <label for="valor">Valor de venda</label>
+                    <input type="text" id="valor" name="valor" placeholder="R$:" required>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="data">Data de cadastro</label>
+                        <input type="date" id="data" name="data" disabled>
+                    </div>
+
+                    <div class="campo">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="">Selecione</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="botoes">
                     <button type="reset">Limpar</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
+
             </form>
 
             <form class="formulario">
-                <h1>Pesquisar Cliente</h1>
+                <h1>Pesquisar de Produto</h1>
 
-                <div class="linha">
+                 <div class="linha">
                     <div class="campo">
-                        <label for="pesquisarCodigo">Pesquisar por ID</label>
-                        <input type="text" id="pesquisarCodigo" name="pesquisarCodigo" placeholder="Digite o ID">
+                        <label for="idPesquisa">ID</label>
+                        <input type="text" id="idPesquisa" name="idPesquisa" disabled>
                     </div>
 
                     <div class="campo">
-                        <label for="pesquisarTipo">Pesquisar por tipo</label>
-                        <select id="pesquisarTipo" name="pesquisarTipo">
-                            <option value="">Selecione</option>
-                            <option value="fisica">Pessoa fisica</option>
-                            <option value="juridica">Pessoa juridica</option>
+                        <label for="idCategoriaPesquisa">ID categoria</label>
+                        <input type="text" id="idCategoriaPesquisa" name="idCategoriaPesquisa" disabled>
                         </select>
                     </div>
                 </div>
 
                 <div class="campo">
-                    <label for="pesquisarCpfCnpj">Pesquisar por CPF/CNPJ</label>
-                    <input type="text" id="pesquisarCpfCnpj" name="pesquisarCpfCnpj" placeholder="Digite o CPF ou CNPJ">
+                    <label for="descricaoPesquisa">Descrição</label>
+                    <input type="text" id="descricaoPesquisa" name="descricaoPesquisa" placeholder="Digite a descrição" required>
                 </div>
 
                 <div class="campo">
-                    <label for="pesquisarNome">Pesquisar por nome</label>
-                    <input type="text" id="pesquisarNome" name="pesquisarNome" placeholder="Digite o nome do cliente">
+                    <label for="observacaoPesquisa">Observação</label>
+                    <input type="text" id="observacaoPesquisa" name="observacaoPesquisa" placeholder="Digite a observação" required>
+                </div>
+
+                <div class="campo">
+                    <label for="valorPesquisa">Valor de venda</label>
+                    <input type="text" id="valorPesquisa" name="valorPesquisa" placeholder="R$:" required>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="dataPesquisa">Data de cadastro</label>
+                        <input type="date" id="dataPesquisa" name="dataPesquisa">
+                    </div>
+
+                    <div class="campo">
+                        <label for="statusPesquisa">Status</label>
+                        <select id="statusPesquisa" name="statusPesquisa">
+                            <option value="">Selecione</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="botoes">
