@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+    <link rel="stylesheet" href="/src/css/styles.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="menu-item" >
+            <button class="menu-button" onclick="abrirDropdown('cadastro')">
+                Cadastro
+            </button>
+
+            <div class="dropdown" id="cadastro">
+                <a href="/src/cliente.html">Clientes</a>
+                <a href="#">Categorias</a>
+                <a href="#">Produtos</a>
+            </div>
+        </div>
+
+        <div class="menu-item" >
+            <button class="menu-button" onclick="abrirDropdown('vendas')">
+                Vendas
+            </button>
+
+            <div class="dropdown" id="vendas">
+                <a href="#">Orçamentos</a>
+            </div>
+        </div>
+
+        <button class="menu-button sair">Sair</button>
+    </nav>
+
+    <main class="cliente-page">
+        <div class="formularios">
+            <form class="form-cliente">
+                <h1>Cadastro de Cliente</h1>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="id" disabled>
+                    </div>
+
+                    <div class="campo">
+                        <label for="tipoCliente">Tipo de Cliente</label>
+                        <select id="tipoCliente" name="tipoCliente">
+                            <option value="">Selecione</option>
+                            <option value="fisica">Pessoa fisica</option>
+                            <option value="juridica">Pessoa juridica</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="cpfCnpj">CPF/CNPJ</label>
+                    <input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Digite o CPF ou CNPJ" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nomeCliente">Nome do Cliente</label>
+                    <input type="text" id="nomeCliente" name="nomeCliente" placeholder="Digite o nome do cliente" required>
+                </div>
+
+                <div class="botoes">
+                    <button type="reset">Limpar</button>
+                    <button type="submit" class="btn-salvar">Salvar</button>
+                </div>
+            </form>
+
+            <form class="form-cliente">
+                <h1>Pesquisar Cliente</h1>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="pesquisarCodigo">Pesquisar por ID</label>
+                        <input type="text" id="pesquisarCodigo" name="pesquisarCodigo" placeholder="Digite o ID">
+                    </div>
+
+                    <div class="campo">
+                        <label for="pesquisarTipo">Pesquisar por tipo</label>
+                        <select id="pesquisarTipo" name="pesquisarTipo">
+                            <option value="">Selecione</option>
+                            <option value="fisica">Pessoa fisica</option>
+                            <option value="juridica">Pessoa juridica</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="pesquisarCpfCnpj">Pesquisar por CPF/CNPJ</label>
+                    <input type="text" id="pesquisarCpfCnpj" name="pesquisarCpfCnpj" placeholder="Digite o CPF ou CNPJ">
+                </div>
+
+                <div class="campo">
+                    <label for="pesquisarNome">Pesquisar por nome</label>
+                    <input type="text" id="pesquisarNome" name="pesquisarNome" placeholder="Digite o nome do cliente">
+                </div>
+
+                <div class="botoes">
+                    <button type="reset">Limpar</button>
+                    <button type="submit" class="btn-pesquisar">Pesquisar</button>
+                </div>
+            </form>
+        </div>
+
+        <section class="lista-clientes">
+            <h1>Lista de Clientes</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Tipo</th>
+                        <th>CPF/CNPJ</th>
+                        <th>Nome</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Pessoa fisica</td>
+                        <td>000.000.000-00</td>
+                        <td>Cliente exemplo</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-excluir">Excluir</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="/src/js/html.js"></script>
+
+</body>
+
+</html>

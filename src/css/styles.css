@@ -57,3 +57,130 @@ body {
 .dropdown.show {
     display: block;
 }
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+.cliente-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 30px 40px;
+}
+
+.formularios {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-cliente {
+    width: 500px;
+    padding: 30px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+}
+
+.form-cliente h1 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 22px;
+}
+
+.linha {
+    display: flex;
+    gap: 10px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    flex: 1;
+}
+
+.campo label {
+    margin-bottom: 5px;
+}
+
+.campo input,
+.campo select {
+    padding: 8px;
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+}
+
+.botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.botoes button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-pesquisar {
+    background-color: green;
+    color: white;
+}
+
+.btn-salvar {
+    background-color: #1f6feb;
+    color: white;
+}
+
+.lista-clientes {
+    flex: 1;
+    padding: 30px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    align-self: stretch;
+    box-sizing: border-box;
+}
+
+.lista-clientes h1 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 22px;
+}
+
+.lista-clientes table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lista-clientes th,
+.lista-clientes td {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    text-align: left;
+}
+
+.lista-clientes th {
+    background-color: #eeeeee;
+}
+
+.btn-editar,
+.btn-excluir {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background-color: #1f6feb;
+}
+
+.btn-excluir {
+    background-color: #d12a4b;
+}
