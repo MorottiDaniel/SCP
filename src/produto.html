@@ -15,7 +15,7 @@
 
     <main class="pagina-cadastro">
         <div class="area-formularios">
-            <form class="formulario">
+            <form id="produtoForm" class="formulario">
                 <h1>Cadastro de Produto</h1>
 
                 <div class="linha">
@@ -25,20 +25,21 @@
                     </div>
 
                     <div class="campo">
-                        <label for="valor_venda">Valor de venda</label>
-                        <input type="text" id="valor_venda" name="valor_venda" placeholder="R$:" required>
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="A">Ativo</option>
+                            <option value="I">Inativo</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label>Categoria</label>
                     <div class="categoria-row">
-                        <input type="hidden" class="categoria_produto_id" name="categoria_produto_id">
+                        <input type="hidden" id="categoria_produto_id" class="categoria_produto_id" name="categoria_produto_id">
                         <input type="text" disabled placeholder="Nenhuma"
                             class="categoriaSelectedInput categoria-input" />
-                        <button type="button" class="categoriaSelectBtn btn-salvar">
-                            Selecionar
-                        </button>
+                        <button type="button" class="categoriaSelectBtn btn-salvar">Selecionar</button>
                     </div>
                 </div>
 
@@ -52,10 +53,17 @@
                     <input type="text" id="marca" name="marca" placeholder="Digite a marca">
                 </div>
 
-                <div class="campo">
-                    <label for="quantidade_estoque">Estoque</label>
-                    <input type="number" id="quantidade_estoque" name="quantidade_estoque"
-                        placeholder="Digite a quantidade em estoque" min="0" required>
+                <div class="linha">
+                    <div class="campo">
+                        <label for="valor_venda">Valor de venda</label>
+                        <input type="number" id="valor_venda" name="valor_venda" placeholder="0,00" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="quantidade_estoque">Estoque</label>
+                        <input type="number" id="quantidade_estoque" name="quantidade_estoque"
+                            placeholder="0" min="0" required>
+                    </div>
                 </div>
 
                 <div class="campo">
@@ -63,30 +71,21 @@
                     <input type="text" id="observacao" name="observacao" placeholder="Digite a observação">
                 </div>
 
-                <div class="linha">
-                    <div class="campo">
-                        <label for="data_cadastro">Data de cadastro</label>
-                        <input type="date" id="data_cadastro" name="data_cadastro" disabled>
-                    </div>
-
-                    <div class="campo">
-                        <label for="status">Status</label>
-                        <select id="status" name="status">
-                            <option value="A">Ativo</option>
-                            <option value="I">Inativo</option>
-                        </select>
-                    </div>
+                <div class="campo">
+                    <label for="data_cadastro">Data de cadastro</label>
+                    <input type="date" id="data_cadastro" name="data_cadastro" disabled>
                 </div>
 
                 <div class="botoes">
                     <button type="reset">Limpar</button>
+                    <button type="button" id="btnCancelarEdicaoProduto" class="btn-cancelar hidden">Cancelar edição</button>
+                    <button type="button" id="btnExcluirProduto" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
-
             </form>
 
-            <form class="formulario">
-                <h1>Pesquisar de Produto</h1>
+            <form id="produtoSearchForm" class="formulario">
+                <h1>Pesquisar Produto</h1>
 
                 <div class="linha">
                     <div class="campo">
@@ -95,20 +94,22 @@
                     </div>
 
                     <div class="campo">
-                        <label for="pesquisarValorVenda">Valor de venda</label>
-                        <input type="text" id="pesquisarValorVenda" name="valor_venda" placeholder="R$:">
+                        <label for="pesquisarStatus">Status</label>
+                        <select id="pesquisarStatus" name="status">
+                            <option value="">Selecione</option>
+                            <option value="A">Ativo</option>
+                            <option value="I">Inativo</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label>Categoria</label>
                     <div class="categoria-row">
-                        <input type="hidden" class="categoria_produto_id" name="categoria_produto_id">
+                        <input type="hidden" id="pesquisarCategoriaProdutoId" class="categoria_produto_id" name="categoria_produto_id">
                         <input type="text" disabled placeholder="Nenhuma"
                             class="categoriaSelectedInput categoria-input" />
-                        <button type="button" class="categoriaSelectBtn btn-salvar">
-                            Selecionar
-                        </button>
+                        <button type="button" class="categoriaSelectBtn btn-salvar">Selecionar</button>
                     </div>
                 </div>
 
@@ -127,24 +128,6 @@
                     <input type="text" id="pesquisarObservacao" name="observacao" placeholder="Digite a observação">
                 </div>
 
-
-
-                <div class="linha">
-                    <div class="campo">
-                        <label for="pesquisarDataCadastro">Data de cadastro</label>
-                        <input type="date" id="pesquisarDataCadastro" name="data_cadastro">
-                    </div>
-
-                    <div class="campo">
-                        <label for="pesquisarStatus">Status</label>
-                        <select id="pesquisarStatus" name="status">
-                            <option value="">Selecione</option>
-                            <option value="A">Ativo</option>
-                            <option value="I">Inativo</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div class="botoes">
                     <button type="reset">Limpar</button>
                     <button type="submit" class="btn-pesquisar">Pesquisar</button>
@@ -152,32 +135,23 @@
             </form>
         </div>
 
-        <section class="lista-dados">
+        <section class="lista-dados" id="produtoListaSection">
             <h1>Lista de Produtos</h1>
 
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Descrição</th>
                         <th>Categoria</th>
                         <th>Marca</th>
-                        <th>Preço</th>
+                        <th>Valor</th>
                         <th>Estoque</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Eletrônicos</td>
-                        <td>Exemplo</td>
-                        <td>R$ 999,00</td>
-                        <td>12</td>
-                        <td>
-                            <button class="btn-editar">Editar</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="produtoTableBody"></tbody>
             </table>
         </section>
     </main>
