@@ -10,3 +10,16 @@ function abrirDropdown(id) {
 
   dropdownClicado.classList.toggle('show');
 }
+
+function configurarLogout() {
+  const botoesSair = document.querySelectorAll('.sair');
+  botoesSair.forEach(function(botao) {
+    botao.addEventListener('click', function() {
+      window.location.href = '/src/login.html';
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  configurarLogout();
+});

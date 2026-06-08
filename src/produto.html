@@ -60,6 +60,16 @@
                 </div>
 
                 <div class="campo">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" name="marca" placeholder="Digite a marca" required>
+                </div>
+
+                <div class="campo">
+                    <label for="estoque">Estoque</label>
+                    <input type="number" id="estoque" name="estoque" placeholder="Digite a quantidade em estoque" min="0" required>
+                </div>
+
+                <div class="campo">
                     <label for="observacao">Observação</label>
                     <input type="text" id="observacao" name="observacao" placeholder="Digite a observação" required>
                 </div>
@@ -147,27 +157,28 @@
         </div>
 
         <section class="lista-dados">
-            <h1>Lista de Clientes</h1>
+            <h1>Lista de Produtos</h1>
 
             <table>
                 <thead>
                     <tr>
-                        <th>Codigo</th>
-                        <th>Tipo</th>
-                        <th>CPF/CNPJ</th>
-                        <th>Nome</th>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>Marca</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Pessoa fisica</td>
-                        <td>000.000.000-00</td>
-                        <td>Cliente exemplo</td>
+                        <td>Eletrônicos</td>
+                        <td>Exemplo</td>
+                        <td>R$ 999,00</td>
+                        <td>12</td>
                         <td>
                             <button class="btn-editar">Editar</button>
-                            <button class="btn-excluir">Excluir</button>
                         </td>
                     </tr>
                 </tbody>

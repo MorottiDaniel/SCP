@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/src/css/styles.css">
+</head>
+
+<body>
+    <main class="login-container">
+        <section class="login-box">
+            <h1>Login</h1>
+            <form id="loginForm" class="login-form">
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="campo campo-senha">
+                    <label for="senha">Senha</label>
+                    <div class="senha-wrapper">
+                        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                        <button type="button" id="toggleSenha" class="btn-toggle-senha" aria-label="Mostrar senha">👁</button>
+                    </div>
+                </div>
+
+                <div class="login-actions">
+                    <a href="#" id="recuperarSenha" class="link-recuperar">Recuperar senha</a>
+                    <button type="submit" class="btn-entrar">Entrar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="/src/js/html.js"></script>
+    <script src="/src/js/login.js"></script>
+</body>
+
+</html>

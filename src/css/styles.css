@@ -3,6 +3,105 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.login-box h1 {
+    margin: 0 0 24px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.login-form .campo {
+    margin-bottom: 18px;
+}
+
+.login-form .campo label {
+    margin-bottom: 8px;
+    display: block;
+}
+
+.login-form .campo input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.campo-senha {
+    position: relative;
+}
+
+.senha-wrapper {
+    position: relative;
+}
+
+.senha-wrapper input {
+    width: 100%;
+    padding-right: 44px;
+}
+
+.btn-toggle-senha {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #1f6feb;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+}
+
+.login-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-entrar {
+    background-color: #1f6feb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    cursor: pointer;
+}
+
+.link-recuperar {
+    color: #1f6feb;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.link-recuperar:hover {
+    text-decoration: underline;
+}
+
 .navbar {
     background-color: #acacac;
     padding: 0px;
