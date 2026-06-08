@@ -38,7 +38,7 @@
 
     <main class="pagina-cadastro">
         <div class="area-formularios">
-            <form class="formulario">
+            <form id="clienteForm" class="formulario">
                 <h1>Cadastro de Cliente</h1>
 
                 <div class="linha">
@@ -69,6 +69,8 @@
 
                 <div class="botoes">
                     <button type="reset">Limpar</button>
+                    <button type="button" id="btnCancelarEdicao" class="btn-cancelar" style="display:none;">Cancelar edição</button>
+                    <button type="button" id="btnExcluirCliente" class="btn-excluir" style="display:none;">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
             </form>
@@ -122,23 +124,15 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Pessoa fisica</td>
-                        <td>000.000.000-00</td>
-                        <td>Cliente exemplo</td>
-                        <td>
-                            <button class="btn-editar">Editar</button>
-                            <button class="btn-excluir">Excluir</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="clienteTableBody"></tbody>
             </table>
         </section>
     </main>
 
     <script src="/src/js/html.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/src/js/supabase.js"></script>
+    <script src="/src/js/cliente.js"></script>
 
 </body>
 
