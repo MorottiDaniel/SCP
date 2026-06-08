@@ -176,7 +176,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    flex: 0 0 500px;
+    flex: 0 0 420px;
     min-width: 320px;
 }
 
@@ -234,11 +234,19 @@ body {
 .btn-pesquisar {
     background-color: green;
     color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .btn-salvar {
     background-color: #1f6feb;
     color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .lista-dados {
@@ -325,3 +333,7 @@ body {
         gap: 0;
     }
 }
+
+/* Utilitários genéricos */
+.hidden { display: none; }
+.text-center { text-align: center; }

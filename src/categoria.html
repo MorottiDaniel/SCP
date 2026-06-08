@@ -10,35 +10,11 @@
 
 <body>
 
-    <nav class="navbar">
-        <div class="menu-item" >
-            <button class="menu-button" onclick="abrirDropdown('cadastro')">
-                Cadastro
-            </button>
-
-            <div class="dropdown" id="cadastro">
-                <a href="/src/cliente.html">Clientes</a>
-                <a href="/src/categoria.html">Categorias</a>
-                <a href="/src/produto.html">Produtos</a>
-            </div>
-        </div>
-
-        <div class="menu-item" >
-            <button class="menu-button" onclick="abrirDropdown('vendas')">
-                Vendas
-            </button>
-
-            <div class="dropdown" id="vendas">
-                <a href="#">Orçamentos</a>
-            </div>
-        </div>
-
-        <button class="menu-button sair">Sair</button>
-    </nav>
+    <div id="navbar-root"></div>
 
     <main class="pagina-cadastro">
         <div class="area-formularios">
-            <form class="formulario">
+            <form id="categoriaForm" class="formulario">
                 <h1>Cadastro de Categoria</h1>
 
                 <div class="linha">
@@ -55,11 +31,13 @@
 
                 <div class="botoes">
                     <button type="reset">Limpar</button>
+                    <button type="button" id="btnCancelarEdicaoCategoria" class="btn-cancelar hidden">Cancelar edição</button>
+                    <button type="button" id="btnExcluirCategoria" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
             </form>
 
-            <form class="formulario">
+            <form id="categoriaSearchForm" class="formulario">
                 <h1>Pesquisar Categoria</h1>
 
                 <div class="linha">
@@ -81,7 +59,7 @@
             </form>
         </div>
 
-        <section class="lista-dados">
+        <section class="lista-dados" id="categoriaListaSection">
             <h1>Lista de Categoria</h1>
 
             <table>
@@ -92,20 +70,15 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Cliente exemplo</td>
-                        <td>
-                            <button class="btn-editar">Editar</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="categoriaTableBody"></tbody>
             </table>
         </section>
     </main>
 
     <script src="/src/js/html.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/src/js/supabase.js"></script>
+    <script src="/src/js/categoria.js"></script>
 
 </body>
 

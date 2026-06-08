@@ -1,9 +1,15 @@
 const clienteForm = document.getElementById('clienteForm');
+const clienteSearchForm = document.getElementById('clienteSearchForm');
 const clienteTableBody = document.getElementById('clienteTableBody');
+const clienteListaSection = document.getElementById('clienteListaSection');
 const clienteIdInput = document.getElementById('cliente_id');
 const tipoClienteInput = document.getElementById('tipo_cliente');
 const cpfCnpjInput = document.getElementById('cpf_cnpj_cliente');
 const nomeClienteInput = document.getElementById('nome_cliente');
+const pesquisarClienteIdInput = document.getElementById('pesquisarClienteId');
+const pesquisarTipoClienteInput = document.getElementById('pesquisarTipoCliente');
+const pesquisarCpfCnpjInput = document.getElementById('pesquisarCpfCnpj');
+const pesquisarNomeClienteInput = document.getElementById('pesquisarNomeCliente');
 const btnCancelarEdicao = document.getElementById('btnCancelarEdicao');
 const btnExcluirCliente = document.getElementById('btnExcluirCliente');
 
@@ -34,13 +40,13 @@ function criarLinhaCliente(cliente) {
     return linha;
 }
 
-function renderizarLista(clientes) {
+function renderizarLista(clientes, emptyMessage = 'Nenhum cliente cadastrado.') {
     clientesCache = clientes || [];
     clienteTableBody.innerHTML = '';
 
     if (!clientesCache.length) {
         const linhaVazia = document.createElement('tr');
-        linhaVazia.innerHTML = '<td colspan="5" style="text-align:center;">Nenhum cliente cadastrado.</td>';
+        linhaVazia.innerHTML = `<td colspan="5" class="text-center">${emptyMessage}</td>`;
         clienteTableBody.appendChild(linhaVazia);
         return;
     }
@@ -50,10 +56,83 @@ function renderizarLista(clientes) {
     });
 }
 
+function mostrarLista(visible) {
+    if (!clienteListaSection) {
+        return;
+    }
+    clienteListaSection.classList.toggle('hidden', !visible);
+}
+
+async function pesquisarClientes(event) {
+    if (event) {
+        event.preventDefault();
+    }
+
+    const id = pesquisarClienteIdInput?.value.trim();
+    const tipo = pesquisarTipoClienteInput?.value;
+    const cpfCnpj = pesquisarCpfCnpjInput?.value.trim();
+    const nome = pesquisarNomeClienteInput?.value.trim();
+
+    const supabase = getSupabaseClient();
+    let query = supabase.from('cliente').select('*').order('cliente_id', { ascending: false });
+
+    if (!id && !tipo && !cpfCnpj && !nome) {
+        const { data, error } = await query;
+        if (error) {
+            console.error('Erro ao carregar clientes na pesquisa:', error);
+            return;
+        }
+
+        mostrarLista(true);
+        renderizarLista(data);
+        return;
+    }
+
+
+    if (id) {
+        const numericId = Number(id);
+        if (!Number.isNaN(numericId)) {
+            query = query.eq('cliente_id', numericId);
+        } else {
+            mostrarLista(true);
+            renderizarLista([], 'ID inválido.');
+            return;
+        }
+    }
+
+    if (tipo) {
+        query = query.eq('tipo_cliente', tipo);
+    }
+
+    if (cpfCnpj) {
+        query = query.ilike('cpf_cnpj_cliente', `%${cpfCnpj}%`);
+    }
+
+    if (nome) {
+        query = query.ilike('nome_cliente', `%${nome}%`);
+    }
+
+    const { data, error } = await query;
+    if (error) {
+        console.error('Erro ao pesquisar clientes:', error);
+        return;
+    }
+
+    mostrarLista(true);
+    renderizarLista(data, 'Nenhum cliente encontrado para os critérios informados.');
+}
+
+function limparPesquisa() {
+    mostrarLista(true);
+    if (clienteTableBody) {
+        clienteTableBody.innerHTML = '<tr><td colspan="5" class="text-center">Pesquise para ver clientes.</td></tr>';
+    }
+}
+
 function atualizarBotoesEdicao() {
     const editando = clienteEditandoId !== null;
-    btnCancelarEdicao.style.display = editando ? 'inline-flex' : 'none';
-    btnExcluirCliente.style.display = editando ? 'inline-flex' : 'none';
+    btnCancelarEdicao.classList.toggle('hidden', !editando);
+    btnExcluirCliente.classList.toggle('hidden', !editando);
 }
 
 async function carregarClientes() {
@@ -169,6 +248,11 @@ window.addEventListener('DOMContentLoaded', function () {
     btnCancelarEdicao.addEventListener('click', limparFormulario);
     btnExcluirCliente.addEventListener('click', excluirCliente);
 
+    if (clienteSearchForm) {
+        clienteSearchForm.addEventListener('submit', pesquisarClientes);
+        clienteSearchForm.addEventListener('reset', limparPesquisa);
+    }
+
     atualizarBotoesEdicao();
-    carregarClientes();
+    limparPesquisa();
 });

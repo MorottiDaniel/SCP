@@ -6,35 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produto</title>
     <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="stylesheet" href="/src/css/produto.css">
 </head>
 
 <body>
 
-    <nav class="navbar">
-        <div class="menu-item">
-            <button class="menu-button" onclick="abrirDropdown('cadastro')">
-                Cadastro
-            </button>
-
-            <div class="dropdown" id="cadastro">
-                <a href="/src/cliente.html">Clientes</a>
-                <a href="/src/categoria.html">Categorias</a>
-                <a href="/src/produto.html">Produtos</a>
-            </div>
-        </div>
-
-        <div class="menu-item">
-            <button class="menu-button" onclick="abrirDropdown('vendas')">
-                Vendas
-            </button>
-
-            <div class="dropdown" id="vendas">
-                <a href="#">Orçamentos</a>
-            </div>
-        </div>
-
-        <button class="menu-button sair">Sair</button>
-    </nav>
+    <div id="navbar-root"></div>
 
     <main class="pagina-cadastro">
         <div class="area-formularios">
@@ -48,8 +25,20 @@
                     </div>
 
                     <div class="campo">
-                        <label for="categoria_produto_id">ID da Categoria</label>
-                        <input type="number" id="categoria_produto_id" name="categoria_produto_id" placeholder="Digite o ID da categoria" min="1" required>
+                        <label for="valor_venda">Valor de venda</label>
+                        <input type="text" id="valor_venda" name="valor_venda" placeholder="R$:" required>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Categoria</label>
+                    <div class="categoria-row">
+                        <input type="hidden" class="categoria_produto_id" name="categoria_produto_id">
+                        <input type="text" disabled placeholder="Nenhuma"
+                            class="categoriaSelectedInput categoria-input" />
+                        <button type="button" class="categoriaSelectBtn btn-salvar">
+                            Selecionar
+                        </button>
                     </div>
                 </div>
 
@@ -65,17 +54,13 @@
 
                 <div class="campo">
                     <label for="quantidade_estoque">Estoque</label>
-                    <input type="number" id="quantidade_estoque" name="quantidade_estoque" placeholder="Digite a quantidade em estoque" min="0" required>
+                    <input type="number" id="quantidade_estoque" name="quantidade_estoque"
+                        placeholder="Digite a quantidade em estoque" min="0" required>
                 </div>
 
                 <div class="campo">
                     <label for="observacao">Observação</label>
                     <input type="text" id="observacao" name="observacao" placeholder="Digite a observação">
-                </div>
-
-                <div class="campo">
-                    <label for="valor_venda">Valor de venda</label>
-                    <input type="text" id="valor_venda" name="valor_venda" placeholder="R$:" required>
                 </div>
 
                 <div class="linha">
@@ -103,15 +88,27 @@
             <form class="formulario">
                 <h1>Pesquisar de Produto</h1>
 
-                 <div class="linha">
+                <div class="linha">
                     <div class="campo">
                         <label for="pesquisarProdutoId">ID</label>
                         <input type="text" id="pesquisarProdutoId" name="produto_id" placeholder="Digite o ID">
                     </div>
 
                     <div class="campo">
-                        <label for="pesquisarCategoriaProdutoId">ID categoria</label>
-                        <input type="text" id="pesquisarCategoriaProdutoId" name="categoria_produto_id" placeholder="Digite o ID da categoria">
+                        <label for="pesquisarValorVenda">Valor de venda</label>
+                        <input type="text" id="pesquisarValorVenda" name="valor_venda" placeholder="R$:">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Categoria</label>
+                    <div class="categoria-row">
+                        <input type="hidden" class="categoria_produto_id" name="categoria_produto_id">
+                        <input type="text" disabled placeholder="Nenhuma"
+                            class="categoriaSelectedInput categoria-input" />
+                        <button type="button" class="categoriaSelectBtn btn-salvar">
+                            Selecionar
+                        </button>
                     </div>
                 </div>
 
@@ -130,10 +127,7 @@
                     <input type="text" id="pesquisarObservacao" name="observacao" placeholder="Digite a observação">
                 </div>
 
-                <div class="campo">
-                    <label for="pesquisarValorVenda">Valor de venda</label>
-                    <input type="text" id="pesquisarValorVenda" name="valor_venda" placeholder="R$:">
-                </div>
+
 
                 <div class="linha">
                     <div class="campo">
@@ -189,6 +183,9 @@
     </main>
 
     <script src="/src/js/html.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/src/js/supabase.js"></script>
+    <script src="/src/js/produto.js"></script>
 
 </body>
 

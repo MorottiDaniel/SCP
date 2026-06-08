@@ -10,31 +10,7 @@
 
 <body>
 
-    <nav class="navbar">
-        <div class="menu-item" >
-            <button class="menu-button" onclick="abrirDropdown('cadastro')">
-                Cadastro
-            </button>
-
-            <div class="dropdown" id="cadastro">
-                <a href="/src/cliente.html">Clientes</a>
-                <a href="/src/categoria.html">Categorias</a>
-                <a href="/src/produto.html">Produtos</a>
-            </div>
-        </div>
-
-        <div class="menu-item" >
-            <button class="menu-button" onclick="abrirDropdown('vendas')">
-                Vendas
-            </button>
-
-            <div class="dropdown" id="vendas">
-                <a href="#">Orçamentos</a>
-            </div>
-        </div>
-
-        <button class="menu-button sair">Sair</button>
-    </nav>
+    <div id="navbar-root"></div>
 
     <main class="pagina-cadastro">
         <div class="area-formularios">
@@ -69,13 +45,13 @@
 
                 <div class="botoes">
                     <button type="reset">Limpar</button>
-                    <button type="button" id="btnCancelarEdicao" class="btn-cancelar" style="display:none;">Cancelar edição</button>
-                    <button type="button" id="btnExcluirCliente" class="btn-excluir" style="display:none;">Excluir</button>
+                    <button type="button" id="btnCancelarEdicao" class="btn-cancelar hidden">Cancelar edição</button>
+                    <button type="button" id="btnExcluirCliente" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
             </form>
 
-            <form class="formulario">
+            <form class="formulario" id="clienteSearchForm">
                 <h1>Pesquisar Cliente</h1>
 
                 <div class="linha">
@@ -111,7 +87,7 @@
             </form>
         </div>
 
-        <section class="lista-dados">
+        <section class="lista-dados" id="clienteListaSection">
             <h1>Lista de Clientes</h1>
 
             <table>
