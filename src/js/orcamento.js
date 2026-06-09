@@ -16,8 +16,9 @@ const orcamentoForm        = document.getElementById('orcamentoForm');
 const orcamentoIdInput     = document.getElementById('orcamento_id');
 const clienteIdInput       = document.getElementById('cliente_id');
 const clienteSelectedInput = document.getElementById('clienteSelectedInput');
-const dataOrcamentoInput = document.getElementById('data_orcamento');
-const dataValidadeInput  = document.getElementById('data_validade');
+const dataOrcamentoInput  = document.getElementById('data_orcamento');
+const dataValidadeInput   = document.getElementById('data_validade');
+const orcamentoFormTitulo = document.getElementById('orcamentoFormTitulo');
 const btnCancelarEdicao  = document.getElementById('btnCancelarEdicaoOrcamento');
 const btnExcluirOrcamento  = document.getElementById('btnExcluirOrcamento');
 const btnAprovarOrcamento   = document.getElementById('btnAprovarOrcamento');
@@ -91,6 +92,7 @@ const pesquisarOrcamentoIdInput     = document.getElementById('pesquisarOrcament
 const pesquisarClienteIdInput       = document.getElementById('pesquisarClienteId');
 const pesquisarClienteSelectedInput = document.getElementById('pesquisarClienteSelectedInput');
 const pesquisarAprovadoInput        = document.getElementById('pesquisarAprovado');
+const pesquisarValidadeInput        = document.getElementById('pesquisarValidade');
 const pesquisarValorTotalInput      = document.getElementById('pesquisarValorTotal');
 const pesquisarValorOperadorInput   = document.getElementById('pesquisarValorOperador');
 const orcamentoListaSection         = document.getElementById('orcamentoListaSection');
@@ -130,6 +132,7 @@ async function pesquisarOrcamentos(event) {
     const id         = pesquisarOrcamentoIdInput?.value.trim();
     const clienteId  = pesquisarClienteIdInput?.value;
     const aprovado   = pesquisarAprovadoInput?.value;
+    const validade   = pesquisarValidadeInput?.value;
     const valorTotal = pesquisarValorTotalInput?.value.trim();
     const valorOp    = pesquisarValorOperadorInput?.value || '=';
 
@@ -150,6 +153,8 @@ async function pesquisarOrcamentos(event) {
     }
     if (clienteId) query = query.eq('cliente_id', Number(clienteId));
     if (aprovado !== '') query = query.eq('aprovado', aprovado === 'true');
+    if (validade === 'dentro') query = query.gte('data_validade', hoje());
+    if (validade === 'fora')   query = query.lt('data_validade', hoje());
 
     const { data, error } = await query;
     if (error) {
@@ -389,6 +394,7 @@ function limparFormulario() {
     orcamentoEditandoId   = null;
     orcamentoAprovado     = false;
     orcamentoDataValidade = null;
+    if (orcamentoFormTitulo) orcamentoFormTitulo.textContent = 'Cadastro de Orçamento';
     if (orcamentoIdInput)     orcamentoIdInput.value     = '';
     if (clienteIdInput)       clienteIdInput.value       = '';
     if (clienteSelectedInput) clienteSelectedInput.value = '';
@@ -424,7 +430,8 @@ async function carregarOrcamento(id) {
     dataOrcamentoInput.value   = data.data_orcamento;
     orcamentoDataValidade = data.data_validade;
     orcamentoAprovado     = data.aprovado ?? false;
-    if (dataValidadeInput) dataValidadeInput.value = formatarData(data.data_validade);
+    if (dataValidadeInput)   dataValidadeInput.value       = formatarData(data.data_validade);
+    if (orcamentoFormTitulo) orcamentoFormTitulo.textContent = 'Dados do Orçamento';
 
     itensOrcamento = (data.orcamento_item || []).map(i => ({
         orcamento_item_id:  i.orcamento_item_id,
@@ -532,7 +539,7 @@ async function atualizarOrcamentoExpirado() {
     if (!window.confirm(
         `Atualizar orçamento expirado?\n` +
         `• Nova data: ${novaDataOrc}\n` +
-        `• Nova validade: ${novaDataVal} (${diffDias} dias)\n` +
+        `• Nova validade: ${novaDataVal} (7 dias)\n` +
         `• Preços dos itens serão atualizados para os valores atuais.`
     )) return;
 
@@ -643,12 +650,22 @@ async function excluirOrcamento() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', async function () {
 
     dataOrcamentoInput.value = hoje();
     renderizarItens();
     atualizarBotoesEdicao();
     limparPesquisaOrcamento();
+
+    // Pré-preenche pesquisa se vier da página de cliente
+    const params = new URLSearchParams(window.location.search);
+    const paramClienteId   = params.get('cliente_id');
+    const paramClienteNome = params.get('cliente_nome');
+    if (paramClienteId) {
+        if (pesquisarClienteIdInput)       pesquisarClienteIdInput.value       = paramClienteId;
+        if (pesquisarClienteSelectedInput) pesquisarClienteSelectedInput.value = paramClienteNome || paramClienteId;
+        await pesquisarOrcamentos();
+    }
 
     // ── Modal de cliente ──────────────────────────────────────────────────────
 

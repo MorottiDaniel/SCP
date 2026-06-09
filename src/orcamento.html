@@ -19,7 +19,7 @@
         <!-- Formulário (ESQUERDA) -->
         <div class="area-formularios">
             <form id="orcamentoForm" class="formulario">
-                <h1>Cadastro de Orçamento</h1>
+                <h1 id="orcamentoFormTitulo">Cadastro de Orçamento</h1>
 
                 <div class="campo">
                     <label for="orcamento_id">ID</label>
@@ -83,6 +83,15 @@
                         <option value="">Todos</option>
                         <option value="true">Aprovado</option>
                         <option value="false">Não aprovado</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="pesquisarValidade">Validade</label>
+                    <select id="pesquisarValidade" name="validade">
+                        <option value="">Todos</option>
+                        <option value="dentro">Dentro da validade</option>
+                        <option value="fora">Fora da validade</option>
                     </select>
                 </div>
 

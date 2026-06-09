@@ -15,7 +15,7 @@
     <main class="pagina-cadastro">
         <div class="area-formularios">
             <form id="categoriaForm" class="formulario">
-                <h1>Cadastro de Categoria</h1>
+                <h1 id="categoriaFormTitulo">Cadastro de Categoria</h1>
 
                 <div class="linha">
                     <div class="campo">
@@ -27,6 +27,10 @@
                 <div class="campo">
                     <label for="ds_categoria_produto">Descrição da categoria</label>
                     <input type="text" id="ds_categoria_produto" name="ds_categoria_produto" placeholder="Digite a descrição" required>
+                </div>
+
+                <div class="campo hidden" id="campoProdutosCategoria">
+                    <button type="button" id="btnVerProdutosCategoria" style="width:100%;padding:10px;font-size:15px;background:#0d6efd;color:white;border:none;border-radius:4px;cursor:pointer;">Produtos</button>
                 </div>
 
                 <div class="botoes">

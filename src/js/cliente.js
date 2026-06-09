@@ -10,8 +10,10 @@ const pesquisarClienteIdInput = document.getElementById('pesquisarClienteId');
 const pesquisarTipoClienteInput = document.getElementById('pesquisarTipoCliente');
 const pesquisarCpfCnpjInput = document.getElementById('pesquisarCpfCnpj');
 const pesquisarNomeClienteInput = document.getElementById('pesquisarNomeCliente');
-const btnCancelarEdicao = document.getElementById('btnCancelarEdicao');
-const btnExcluirCliente = document.getElementById('btnExcluirCliente');
+const btnCancelarEdicao       = document.getElementById('btnCancelarEdicao');
+const btnExcluirCliente       = document.getElementById('btnExcluirCliente');
+const clienteFormTitulo       = document.getElementById('clienteFormTitulo');
+const campoOrcamentosCliente  = document.getElementById('campoOrcamentosCliente');
 
 let clientesCache = [];
 let clienteEditandoId = null;
@@ -24,9 +26,9 @@ function criarLinhaCliente(cliente) {
     const linha = document.createElement('tr');
     linha.innerHTML = `
         <td>${cliente.cliente_id}</td>
-        <td>${formatarTipoCliente(cliente.tipo_cliente)}</td>
-        <td>${cliente.cpf_cnpj_cliente}</td>
         <td>${cliente.nome_cliente}</td>
+        <td>${cliente.cpf_cnpj_cliente}</td>
+        <td>${formatarTipoCliente(cliente.tipo_cliente)}</td>
         <td>
             <button type="button" class="btn-editar" data-cliente-id="${cliente.cliente_id}">Editar</button>
         </td>
@@ -133,6 +135,7 @@ function atualizarBotoesEdicao() {
     const editando = clienteEditandoId !== null;
     btnCancelarEdicao.classList.toggle('hidden', !editando);
     btnExcluirCliente.classList.toggle('hidden', !editando);
+    campoOrcamentosCliente?.classList.toggle('hidden', !editando);
 }
 
 async function carregarClientes() {
@@ -161,6 +164,7 @@ function carregarClienteNoFormulario(clienteId) {
     tipoClienteInput.value = cliente.tipo_cliente;
     cpfCnpjInput.value = cliente.cpf_cnpj_cliente;
     nomeClienteInput.value = cliente.nome_cliente;
+    if (clienteFormTitulo) clienteFormTitulo.textContent = 'Dados do Cliente';
     atualizarBotoesEdicao();
 }
 
@@ -170,6 +174,7 @@ function limparFormulario() {
     tipoClienteInput.value = '';
     cpfCnpjInput.value = '';
     nomeClienteInput.value = '';
+    if (clienteFormTitulo) clienteFormTitulo.textContent = 'Cadastro de Cliente';
     atualizarBotoesEdicao();
 }
 
@@ -247,6 +252,13 @@ window.addEventListener('DOMContentLoaded', function () {
     clienteForm.addEventListener('reset', limparFormulario);
     btnCancelarEdicao.addEventListener('click', limparFormulario);
     btnExcluirCliente.addEventListener('click', excluirCliente);
+
+    document.getElementById('btnVerOrcamentosCliente')?.addEventListener('click', () => {
+        const cliente = clientesCache.find(c => c.cliente_id === clienteEditandoId);
+        const nome = cliente ? cliente.nome_cliente : '';
+        const label = encodeURIComponent(`${clienteEditandoId} - ${nome}`);
+        window.location.href = `/src/orcamento.html?cliente_id=${clienteEditandoId}&cliente_nome=${label}`;
+    });
 
     if (clienteSearchForm) {
         clienteSearchForm.addEventListener('submit', pesquisarClientes);

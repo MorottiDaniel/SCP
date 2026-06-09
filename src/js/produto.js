@@ -13,7 +13,8 @@ const observacaoInput = document.getElementById('observacao');
 const dataCadastroInput = document.getElementById('data_cadastro');
 const statusInput = document.getElementById('status');
 const btnCancelarEdicaoProduto = document.getElementById('btnCancelarEdicaoProduto');
-const btnExcluirProduto = document.getElementById('btnExcluirProduto');
+const btnExcluirProduto        = document.getElementById('btnExcluirProduto');
+const produtoFormTitulo        = document.getElementById('produtoFormTitulo');
 
 const pesquisarProdutoIdInput = document.getElementById('pesquisarProdutoId');
 const pesquisarCategoriaProdutoIdInput = document.getElementById('pesquisarCategoriaProdutoId');
@@ -179,6 +180,7 @@ function limparFormularioProduto() {
     if (categoriaProdutoIdInput) categoriaProdutoIdInput.value = '';
     if (categoriaSelectedInput) categoriaSelectedInput.value = '';
     if (dataCadastroInput) dataCadastroInput.value = '';
+    if (produtoFormTitulo) produtoFormTitulo.textContent = 'Cadastro de Produto';
     atualizarBotoesEdicao();
 }
 
@@ -203,6 +205,7 @@ function carregarProdutoNoFormulario(produtoId) {
     if (dataCadastroInput) dataCadastroInput.value = formatarData(produto.data_cadastro);
     if (statusInput) statusInput.value = produto.status;
 
+    if (produtoFormTitulo) produtoFormTitulo.textContent = 'Dados do Produto';
     atualizarBotoesEdicao();
     produtoForm?.scrollIntoView({ behavior: 'smooth' });
 }
@@ -364,7 +367,7 @@ function limparPesquisaProduto() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', async function () {
     if (!produtoForm || !produtoTableBody) return;
 
     // Botões do modal de categoria
@@ -417,4 +420,14 @@ window.addEventListener('DOMContentLoaded', function () {
 
     atualizarBotoesEdicao();
     limparPesquisaProduto();
+
+    // Pré-preenche pesquisa se vier da página de categoria
+    const params = new URLSearchParams(window.location.search);
+    const paramCategoriaId   = params.get('categoria_id');
+    const paramCategoriaNome = params.get('categoria_nome');
+    if (paramCategoriaId) {
+        if (pesquisarCategoriaProdutoIdInput) pesquisarCategoriaProdutoIdInput.value = paramCategoriaId;
+        if (pesquisarCategoriaSelectedInput)  pesquisarCategoriaSelectedInput.value  = paramCategoriaNome || paramCategoriaId;
+        await pesquisarProdutos();
+    }
 });

@@ -5,7 +5,9 @@ const categoriaListaSection = document.getElementById('categoriaListaSection');
 const categoriaIdInput = document.getElementById('categoria_produto_id');
 const dsCategoriaInput = document.getElementById('ds_categoria_produto');
 const btnCancelarEdicaoCategoria = document.getElementById('btnCancelarEdicaoCategoria');
-const btnExcluirCategoria = document.getElementById('btnExcluirCategoria');
+const btnExcluirCategoria        = document.getElementById('btnExcluirCategoria');
+const categoriaFormTitulo        = document.getElementById('categoriaFormTitulo');
+const campoProdutosCategoria     = document.getElementById('campoProdutosCategoria');
 const pesquisarCategoriaIdInput = document.getElementById('pesquisarCategoriaId');
 const pesquisarDsCategoriaInput = document.getElementById('pesquisarDsCategoria');
 
@@ -60,6 +62,7 @@ function atualizarBotoesEdicaoCategoria() {
     if (btnExcluirCategoria) {
         btnExcluirCategoria.classList.toggle('hidden', !editando);
     }
+    campoProdutosCategoria?.classList.toggle('hidden', !editando);
 }
 
 function limparFormularioCategoria() {
@@ -70,6 +73,7 @@ function limparFormularioCategoria() {
     if (dsCategoriaInput) {
         dsCategoriaInput.value = '';
     }
+    if (categoriaFormTitulo) categoriaFormTitulo.textContent = 'Cadastro de Categoria';
     atualizarBotoesEdicaoCategoria();
 }
 
@@ -86,6 +90,7 @@ async function carregarCategoriaNoFormulario(categoriaId) {
     if (dsCategoriaInput) {
         dsCategoriaInput.value = categoria.ds_categoria_produto;
     }
+    if (categoriaFormTitulo) categoriaFormTitulo.textContent = 'Dados da Categoria';
     atualizarBotoesEdicaoCategoria();
 }
 
@@ -190,6 +195,13 @@ window.addEventListener('DOMContentLoaded', function () {
     categoriaForm.addEventListener('submit', salvarCategoria);
     categoriaForm.addEventListener('reset', limparFormularioCategoria);
     btnCancelarEdicaoCategoria?.addEventListener('click', limparFormularioCategoria);
+
+    document.getElementById('btnVerProdutosCategoria')?.addEventListener('click', () => {
+        const categoria = categoriasCache.find(c => c.categoria_produto_id === categoriaEditandoId);
+        const nome = categoria ? categoria.ds_categoria_produto : '';
+        const label = encodeURIComponent(`${categoriaEditandoId} - ${nome}`);
+        window.location.href = `/src/produto.html?categoria_id=${categoriaEditandoId}&categoria_nome=${label}`;
+    });
     btnExcluirCategoria?.addEventListener('click', async () => {
         if (!categoriaEditandoId) {
             return;
