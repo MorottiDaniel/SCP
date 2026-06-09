@@ -21,6 +21,7 @@ const dataValidadeInput   = document.getElementById('data_validade');
 const orcamentoFormTitulo = document.getElementById('orcamentoFormTitulo');
 const btnCancelarEdicao  = document.getElementById('btnCancelarEdicaoOrcamento');
 const btnExcluirOrcamento  = document.getElementById('btnExcluirOrcamento');
+const btnLimparOrcamento   = document.getElementById('btnLimparOrcamento');
 const btnAprovarOrcamento   = document.getElementById('btnAprovarOrcamento');
 const btnAtualizarOrcamento = document.getElementById('btnAtualizarOrcamento');
 const btnSalvarOrcamento    = document.getElementById('btnSalvarOrcamento');
@@ -378,6 +379,7 @@ function atualizarBotoesEdicao() {
 
     btnCancelarEdicao?.classList.toggle('hidden', !editando);
     btnExcluirOrcamento?.classList.toggle('hidden', !editando);
+    btnLimparOrcamento?.classList.toggle('hidden', editando);
 
     // Aprovar: edição + não aprovado + não expirado
     campoAprovar?.classList.toggle('hidden', !editando || orcamentoAprovado || expirado);
@@ -657,11 +659,14 @@ window.addEventListener('DOMContentLoaded', async function () {
     atualizarBotoesEdicao();
     limparPesquisaOrcamento();
 
-    // Pré-preenche pesquisa se vier da página de cliente
+    // Pré-preenche formulário ou pesquisa se vier da página de cliente
     const params = new URLSearchParams(window.location.search);
     const paramClienteId   = params.get('cliente_id');
     const paramClienteNome = params.get('cliente_nome');
-    if (paramClienteId) {
+    if (paramClienteId && params.get('novo') === '1') {
+        if (clienteIdInput)       clienteIdInput.value       = paramClienteId;
+        if (clienteSelectedInput) clienteSelectedInput.value = paramClienteNome || paramClienteId;
+    } else if (paramClienteId) {
         if (pesquisarClienteIdInput)       pesquisarClienteIdInput.value       = paramClienteId;
         if (pesquisarClienteSelectedInput) pesquisarClienteSelectedInput.value = paramClienteNome || paramClienteId;
         await pesquisarOrcamentos();

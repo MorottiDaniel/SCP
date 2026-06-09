@@ -12,6 +12,7 @@ const pesquisarCpfCnpjInput = document.getElementById('pesquisarCpfCnpj');
 const pesquisarNomeClienteInput = document.getElementById('pesquisarNomeCliente');
 const btnCancelarEdicao       = document.getElementById('btnCancelarEdicao');
 const btnExcluirCliente       = document.getElementById('btnExcluirCliente');
+const btnLimparCliente        = document.getElementById('btnLimparCliente');
 const clienteFormTitulo       = document.getElementById('clienteFormTitulo');
 const campoOrcamentosCliente  = document.getElementById('campoOrcamentosCliente');
 
@@ -136,6 +137,7 @@ function atualizarBotoesEdicao() {
     btnCancelarEdicao.classList.toggle('hidden', !editando);
     btnExcluirCliente.classList.toggle('hidden', !editando);
     campoOrcamentosCliente?.classList.toggle('hidden', !editando);
+    btnLimparCliente?.classList.toggle('hidden', editando);
 }
 
 async function carregarClientes() {
@@ -258,6 +260,13 @@ window.addEventListener('DOMContentLoaded', function () {
         const nome = cliente ? cliente.nome_cliente : '';
         const label = encodeURIComponent(`${clienteEditandoId} - ${nome}`);
         window.location.href = `/src/orcamento.html?cliente_id=${clienteEditandoId}&cliente_nome=${label}`;
+    });
+
+    document.getElementById('btnCriarOrcamentoCliente')?.addEventListener('click', () => {
+        const cliente = clientesCache.find(c => c.cliente_id === clienteEditandoId);
+        const nome = cliente ? cliente.nome_cliente : '';
+        const label = encodeURIComponent(`${clienteEditandoId} - ${nome}`);
+        window.location.href = `/src/orcamento.html?novo=1&cliente_id=${clienteEditandoId}&cliente_nome=${label}`;
     });
 
     if (clienteSearchForm) {
