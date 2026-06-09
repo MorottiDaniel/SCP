@@ -1,0 +1,125 @@
+/* Botão Aprovar */
+.btn-aprovar {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-aprovar:hover { background-color: #218838; }
+
+.btn-atualizar { background-color: #e67e00; color: white; padding: 8px 14px; border: none; border-radius: 4px; cursor: pointer; }
+.btn-atualizar:hover { background-color: #c46c00; }
+
+.btn-aprovar-campo {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+}
+
+/* Linha de validade: date + dias */
+.validade-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.validade-input { flex: 1; }
+.dias-input { width: 70px; }
+.dias-label { font-size: 13px; color: #666; white-space: nowrap; }
+
+/* Tfoot da tabela de itens */
+#orcamentoItensSection tfoot td {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    background-color: #f4f4f4;
+}
+
+/* Modal de item */
+.item-modal-box { max-width: 560px; }
+.item-modal-body { max-height: 200px; }
+
+/* Produto selecionado dentro do modal de item */
+.item-selecionado {
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    margin-top: 8px;
+    background: #f9f9f9;
+}
+
+.item-selecionado-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item-produto-nome {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-limpar-produto {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    color: #d12a4b;
+    padding: 0 4px;
+}
+
+/* Footer do modal de item */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Botão cancelar genérico */
+.btn-cancelar {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-cancelar:hover { background-color: #565e64; }
+
+/* Grid 2×2: cadastro↔itens na linha 1, pesquisa↔lista na linha 2 */
+.orcamento-layout {
+    display: grid !important;
+    grid-template-columns: 420px 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+}
+
+/* Dissolve os wrappers no grid para que os filhos virem grid items */
+.orcamento-layout .area-formularios,
+.orcamento-layout .orcamento-right-panel {
+    display: contents;
+}
+
+.orcamento-layout #orcamentoForm         { grid-column: 1; grid-row: 1; }
+.orcamento-layout #orcamentoSearchForm   { grid-column: 1; grid-row: 2; }
+.orcamento-layout #orcamentoItensSection { grid-column: 2; grid-row: 1; }
+.orcamento-layout #orcamentoListaSection { grid-column: 2; grid-row: 2; }
+
+@media (max-width: 1120px) {
+    .orcamento-layout {
+        grid-template-columns: 1fr;
+    }
+    .orcamento-layout #orcamentoForm,
+    .orcamento-layout #orcamentoSearchForm,
+    .orcamento-layout #orcamentoItensSection,
+    .orcamento-layout #orcamentoListaSection {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}

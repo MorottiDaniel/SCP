@@ -21,6 +21,10 @@ const pesquisarCategoriaSelectedInput = produtoSearchForm?.querySelector('.categ
 const pesquisarDsProdutoInput = document.getElementById('pesquisarDsProduto');
 const pesquisarMarcaInput = document.getElementById('pesquisarMarca');
 const pesquisarObservacaoInput = document.getElementById('pesquisarObservacao');
+const pesquisarQuantidadeEstoqueInput = document.getElementById('pesquisarQuantidadeEstoque');
+const pesquisarEstoqueOperadorInput = document.getElementById('pesquisarEstoqueOperador');
+const pesquisarValorVendaInput = document.getElementById('pesquisarValorVenda');
+const pesquisarValorOperadorInput = document.getElementById('pesquisarValorOperador');
 const pesquisarStatusInput = document.getElementById('pesquisarStatus');
 
 let produtosCache = [];
@@ -294,6 +298,10 @@ async function pesquisarProdutos(event) {
     const dsProduto = pesquisarDsProdutoInput?.value.trim();
     const marca = pesquisarMarcaInput?.value.trim();
     const observacao = pesquisarObservacaoInput?.value.trim();
+    const quantidadeEstoque = pesquisarQuantidadeEstoqueInput?.value.trim();
+    const estoqueOperador = pesquisarEstoqueOperadorInput?.value || '=';
+    const valorVenda = pesquisarValorVendaInput?.value.trim();
+    const valorOperador = pesquisarValorOperadorInput?.value || '=';
     const status = pesquisarStatusInput?.value;
 
     const supabase = getSupabaseClient();
@@ -316,6 +324,22 @@ async function pesquisarProdutos(event) {
     if (dsProduto) query = query.ilike('ds_produto', `%${dsProduto}%`);
     if (marca) query = query.ilike('marca', `%${marca}%`);
     if (observacao) query = query.ilike('observacao', `%${observacao}%`);
+    if (quantidadeEstoque !== '') {
+        const numEstoque = Number(quantidadeEstoque);
+        if (!Number.isNaN(numEstoque)) {
+            if (estoqueOperador === '=') query = query.eq('quantidade_estoque', numEstoque);
+            else if (estoqueOperador === '<') query = query.lt('quantidade_estoque', numEstoque);
+            else if (estoqueOperador === '>') query = query.gt('quantidade_estoque', numEstoque);
+        }
+    }
+    if (valorVenda !== '') {
+        const numValor = Number(valorVenda);
+        if (!Number.isNaN(numValor)) {
+            if (valorOperador === '=') query = query.eq('valor_venda', numValor);
+            else if (valorOperador === '<') query = query.lt('valor_venda', numValor);
+            else if (valorOperador === '>') query = query.gt('valor_venda', numValor);
+        }
+    }
     if (status) query = query.eq('status', status);
 
     const { data, error } = await query;

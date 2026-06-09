@@ -19,7 +19,7 @@ function obterNavbarHTML() {
         </button>
 
         <div class="dropdown" id="vendas">
-          <a href="#">Orçamentos</a>
+          <a href="/src/orcamento.html">Orçamentos</a>
         </div>
       </div>
 

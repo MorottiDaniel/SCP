@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamento</title>
+    <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="stylesheet" href="/src/css/produto.css">
+    <link rel="stylesheet" href="/src/css/orcamento.css">
+</head>
+
+<body>
+
+    <div id="navbar-root"></div>
+
+    <main class="pagina-cadastro orcamento-layout">
+
+        <!-- Formulário (ESQUERDA) -->
+        <div class="area-formularios">
+            <form id="orcamentoForm" class="formulario">
+                <h1>Cadastro de Orçamento</h1>
+
+                <div class="campo">
+                    <label for="orcamento_id">ID</label>
+                    <input type="text" id="orcamento_id" name="orcamento_id" disabled>
+                </div>
+
+                <div class="campo">
+                    <label>Cliente</label>
+                    <div class="categoria-row">
+                        <input type="hidden" id="cliente_id" name="cliente_id">
+                        <input type="text" id="clienteSelectedInput" disabled placeholder="Nenhum" class="categoria-input">
+                        <button type="button" id="clienteSelectBtn" class="btn-salvar">Selecionar</button>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="data_orcamento">Data Orçamento</label>
+                    <input type="date" id="data_orcamento" name="data_orcamento" disabled>
+                </div>
+
+                <div class="campo">
+                    <label for="data_validade">Válido até</label>
+                    <input type="text" id="data_validade" disabled placeholder="—">
+                </div>
+
+                <div class="campo hidden" id="campoAprovar">
+                    <button type="button" id="btnAprovarOrcamento" class="btn-aprovar btn-aprovar-campo">Aprovar Orçamento</button>
+                </div>
+
+                <div class="campo hidden" id="campoAtualizar">
+                    <button type="button" id="btnAtualizarOrcamento" class="btn-atualizar btn-aprovar-campo">Atualizar Orçamento</button>
+                </div>
+
+                <div class="botoes">
+                    <button type="reset">Limpar</button>
+                    <button type="button" id="btnCancelarEdicaoOrcamento" class="btn-cancelar hidden">Cancelar edição</button>
+                    <button type="button" id="btnExcluirOrcamento" class="btn-excluir hidden">Excluir</button>
+                    <button type="submit" id="btnSalvarOrcamento" class="btn-salvar">Salvar</button>
+                </div>
+            </form>
+            <form id="orcamentoSearchForm" class="formulario">
+                <h1>Pesquisar Orçamento</h1>
+
+                <div class="campo">
+                    <label for="pesquisarOrcamentoId">ID</label>
+                    <input type="text" id="pesquisarOrcamentoId" name="orcamento_id" placeholder="Digite o ID">
+                </div>
+
+                <div class="campo">
+                    <label>Cliente</label>
+                    <div class="categoria-row">
+                        <input type="hidden" id="pesquisarClienteId" name="cliente_id">
+                        <input type="text" id="pesquisarClienteSelectedInput" disabled placeholder="Nenhum" class="categoria-input">
+                        <button type="button" id="pesquisarClienteSelectBtn" class="btn-salvar">Selecionar</button>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="pesquisarAprovado">Aprovado</label>
+                    <select id="pesquisarAprovado" name="aprovado">
+                        <option value="">Todos</option>
+                        <option value="true">Aprovado</option>
+                        <option value="false">Não aprovado</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="pesquisarValorTotal">Valor Total</label>
+                    <div style="display:flex;gap:0.5rem;">
+                        <select id="pesquisarValorOperador" style="width:4rem;">
+                            <option value="=">=</option>
+                            <option value="<">&lt;</option>
+                            <option value=">">&gt;</option>
+                        </select>
+                        <input type="number" id="pesquisarValorTotal" placeholder="0,00" min="0" step="0.01" style="flex:1;">
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <button type="reset">Limpar</button>
+                    <button type="submit" class="btn-pesquisar">Pesquisar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- DIREITA: lista de orçamentos + itens -->
+        <div class="orcamento-right-panel">
+
+        <section class="lista-dados" id="orcamentoItensSection">
+            <h1>Itens do Orçamento</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qtd</th>
+                        <th>Valor Unit.</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="orcamentoItensBody">
+                    <tr>
+                        <td colspan="5" class="text-center">Nenhum item adicionado.</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong>Total Geral</strong></td>
+                        <td id="orcamentoTotalGeral"><strong>R$ 0,00</strong></td>
+                        <td>
+                            <button type="button" id="btnAdicionarItem" class="btn-salvar">+ Item</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="lista-dados" id="orcamentoListaSection">
+            <h1>Lista de Orçamentos</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Validade</th>
+                        <th>Valor Total</th>
+                        <th>Aprovado</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="orcamentoListaBody">
+                    <tr><td colspan="7" class="text-center">Pesquise para ver orçamentos.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        </div><!-- /.orcamento-right-panel -->
+    </main>
+
+    <!-- Modal de cliente -->
+    <div id="clienteModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">Selecione um cliente</h2>
+                <button id="closeClienteModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-search">
+                <input id="clienteSearchInput" placeholder="Pesquisar cliente">
+            </div>
+            <div class="modal-body">
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>CPF/CNPJ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clienteModalBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de item (adicionar / editar) -->
+    <div id="itemModal" class="modal-overlay">
+        <div class="modal-box item-modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title" id="itemModalTitle">Adicionar Item</h2>
+                <button id="closeItemModal" class="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-search" id="itemProdutoSearch">
+                <input id="produtoSearchInput" placeholder="Pesquisar produto">
+            </div>
+            <div class="modal-body item-modal-body" id="itemProdutoListSection">
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Descrição</th>
+                            <th>Marca</th>
+                            <th>Estoque</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemProdutoBody"></tbody>
+                </table>
+            </div>
+
+            <div id="itemProdutoSelecionado" class="item-selecionado hidden">
+                <div class="item-selecionado-info">
+                    <span id="itemProdutoNome" class="item-produto-nome"></span>
+                    <button type="button" id="btnLimparProduto" class="btn-limpar-produto" title="Trocar produto">&times;</button>
+                </div>
+                <div class="linha">
+                    <div class="campo">
+                        <label>Estoque disponível</label>
+                        <input type="text" id="itemEstoqueDisponivel" disabled>
+                    </div>
+                    <div class="campo">
+                        <label for="itemValorUnitario">Valor unitário</label>
+                        <input type="number" id="itemValorUnitario" min="0" step="0.01" placeholder="0,00">
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="itemQuantidade">Quantidade</label>
+                    <input type="number" id="itemQuantidade" min="1" step="1" placeholder="0">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnRemoverItem" class="btn-excluir hidden">Remover Item</button>
+                <button type="button" id="btnCancelarItem" class="btn-cancelar">Cancelar</button>
+                <button type="button" id="btnConfirmarItem" class="btn-salvar">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/js/html.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/src/js/supabase.js"></script>
+    <script src="/src/js/orcamento.js"></script>
+
+</body>
+
+</html>
