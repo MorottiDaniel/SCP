@@ -53,6 +53,10 @@
                     <button type="button" id="btnAtualizarOrcamento" class="btn-atualizar btn-aprovar-campo">Atualizar Orçamento</button>
                 </div>
 
+                <div class="campo hidden" id="campoVisualizarPdf">
+                    <button type="button" id="btnVisualizarPdf" class="btn-salvar btn-aprovar-campo">Visualizar Orçamento</button>
+                </div>
+
                 <div class="botoes">
                     <button type="reset" id="btnLimparOrcamento">Limpar</button>
                     <button type="button" id="btnCancelarEdicaoOrcamento" class="btn-cancelar hidden">Cancelar edição</button>
@@ -251,6 +255,8 @@
 
     <script src="/src/js/html.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="/src/js/supabase.js"></script>
     <script src="/src/js/orcamento.js"></script>
 

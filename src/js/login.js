@@ -18,16 +18,53 @@ function configurarLoginForm() {
   const recuperarSenha = document.getElementById('recuperarSenha');
 
   if (loginForm) {
-    loginForm.addEventListener('submit', function(event) {
+    loginForm.addEventListener('submit', async function(event) {
       event.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+      const btnEntrar = loginForm.querySelector('.btn-entrar');
+
+      btnEntrar.disabled = true;
+      btnEntrar.textContent = 'Entrando...';
+
+      const erroLogin = document.getElementById('erroLogin');
+      erroLogin.style.display = 'none';
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password: senha });
+
+      if (error) {
+        erroLogin.textContent = 'Email ou senha inválidos.';
+        erroLogin.style.display = 'block';
+        btnEntrar.disabled = false;
+        btnEntrar.textContent = 'Entrar';
+        return;
+      }
+
       window.location.href = '/src/menu.html';
     });
   }
 
   if (recuperarSenha) {
-    recuperarSenha.addEventListener('click', function(event) {
+    recuperarSenha.addEventListener('click', async function(event) {
       event.preventDefault();
-      alert('Recuperação de senha solicitada. Implemente o fluxo de recuperação aqui.');
+      const email = document.getElementById('email').value.trim();
+      const msgRecuperar = document.getElementById('msgRecuperar');
+      if (!email) {
+        msgRecuperar.textContent = 'Digite seu email antes de solicitar a recuperação de senha.';
+        msgRecuperar.style.color = 'red';
+        msgRecuperar.style.display = 'block';
+        return;
+      }
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+      if (error) {
+        msgRecuperar.textContent = 'Erro ao enviar email de recuperação.';
+        msgRecuperar.style.color = 'red';
+      } else {
+        msgRecuperar.textContent = 'Email de recuperação enviado! Verifique sua caixa de entrada.';
+        msgRecuperar.style.color = 'green';
+      }
+      msgRecuperar.style.display = 'block';
     });
   }
 }

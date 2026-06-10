@@ -27,6 +27,7 @@ const btnAtualizarOrcamento = document.getElementById('btnAtualizarOrcamento');
 const btnSalvarOrcamento    = document.getElementById('btnSalvarOrcamento');
 const campoAprovar          = document.getElementById('campoAprovar');
 const campoAtualizar        = document.getElementById('campoAtualizar');
+const campoVisualizarPdf    = document.getElementById('campoVisualizarPdf');
 
 // ─── Inputs – tabela de itens ─────────────────────────────────────────────────
 
@@ -385,6 +386,8 @@ function atualizarBotoesEdicao() {
     campoAprovar?.classList.toggle('hidden', !editando || orcamentoAprovado || expirado);
     // Atualizar: edição + não aprovado + expirado
     campoAtualizar?.classList.toggle('hidden', !editando || orcamentoAprovado || !expirado);
+    // Visualizar PDF: sempre visível ao editar
+    campoVisualizarPdf?.classList.toggle('hidden', !editando);
 
     // Salvar e +Item bloqueados quando aprovado ou expirado
     const bloquear = editando && (orcamentoAprovado || expirado);
@@ -650,6 +653,75 @@ async function excluirOrcamento() {
     await pesquisarOrcamentos();
 }
 
+// ─── PDF ──────────────────────────────────────────────────────────────────────
+
+function gerarPdfOrcamento() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const L = 14;        // margem esquerda
+    const R = pageWidth / 2 + 5; // início da coluna direita (~110mm)
+
+    // Título centralizado
+    doc.setFontSize(18);
+    doc.setFont(undefined, 'bold');
+    doc.text('Orçamento', pageWidth / 2, 20, { align: 'center' });
+
+    // Extrai só o nome do cliente (formato "ID - Nome")
+    const clienteValor = clienteSelectedInput.value;
+    const clienteNome = clienteValor.includes(' - ')
+        ? clienteValor.split(' - ').slice(1).join(' - ')
+        : clienteValor;
+
+    doc.setFontSize(10);
+
+    // Linha 1: ID | Cliente
+    doc.setFont(undefined, 'bold');
+    doc.text('ID:', L, 35);
+    doc.text('Cliente:', R, 35);
+    doc.setFont(undefined, 'normal');
+    doc.text(String(orcamentoEditandoId), L + 10, 35);
+    doc.text(clienteNome, R + 18, 35);
+
+    // Linha 2: Data | Válido até
+    doc.setFont(undefined, 'bold');
+    doc.text('Data:', L, 44);
+    doc.text('Válido até:', R, 44);
+    doc.setFont(undefined, 'normal');
+    doc.text(formatarData(dataOrcamentoInput.value), L + 14, 44);
+    doc.text(dataValidadeInput.value, R + 25, 44);
+
+    // Linha 3: Status
+    doc.setFont(undefined, 'bold');
+    doc.text('Status:', L, 53);
+    doc.setFont(undefined, 'normal');
+    doc.text(orcamentoAprovado ? 'Aprovado' : 'Pendente', L + 17, 53);
+
+    const totalGeral = itensOrcamento.reduce((s, i) => s + i.quantidade * i.valor_unitario, 0);
+
+    doc.autoTable({
+        startY: 63,
+        head: [['Produto', 'Qtd', 'Valor Unitário', 'Total']],
+        body: itensOrcamento.map(item => [
+            item.ds_produto,
+            item.quantidade,
+            formatarValor(item.valor_unitario),
+            formatarValor(item.quantidade * item.valor_unitario),
+        ]),
+        foot: [[
+            { content: 'Total Geral', colSpan: 3, styles: { halign: 'right', fontStyle: 'bold' } },
+            { content: formatarValor(totalGeral), styles: { fontStyle: 'bold' } },
+        ]],
+        showFoot: 'lastPage',
+        theme: 'striped',
+        headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+        footStyles: { fillColor: [240, 240, 240], textColor: 30 },
+        columnStyles: { 1: { halign: 'center' }, 2: { halign: 'right' }, 3: { halign: 'right' } },
+    });
+
+    doc.save(`orcamento_${orcamentoEditandoId}.pdf`);
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 window.addEventListener('DOMContentLoaded', async function () {
@@ -776,4 +848,5 @@ window.addEventListener('DOMContentLoaded', async function () {
     btnExcluirOrcamento?.addEventListener('click', excluirOrcamento);
     btnAprovarOrcamento?.addEventListener('click', aprovarOrcamento);
     btnAtualizarOrcamento?.addEventListener('click', atualizarOrcamentoExpirado);
+    document.getElementById('btnVisualizarPdf')?.addEventListener('click', gerarPdfOrcamento);
 });

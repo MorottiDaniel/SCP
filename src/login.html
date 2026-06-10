@@ -14,8 +14,8 @@
             <h1>Login</h1>
             <form id="loginForm" class="login-form">
                 <div class="campo">
-                    <label for="login">Login</label>
-                    <input type="text" id="login" name="login" placeholder="Digite seu login" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu email" required>
                 </div>
 
                 <div class="campo campo-senha">
@@ -26,6 +26,9 @@
                     </div>
                 </div>
 
+                <p id="erroLogin" style="display:none;color:red;font-size:0.9rem;margin-bottom:0.5rem;"></p>
+                <p id="msgRecuperar" style="display:none;font-size:0.9rem;margin-bottom:0.5rem;"></p>
+
                 <div class="login-actions">
                     <a href="#" id="recuperarSenha" class="link-recuperar">Recuperar senha</a>
                     <button type="submit" class="btn-entrar">Entrar</button>
@@ -34,6 +37,8 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/supabase.js"></script>
     <script src="/src/js/html.js"></script>
     <script src="/src/js/login.js"></script>
 </body>
