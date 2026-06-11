@@ -149,7 +149,7 @@ async function pesquisarClientes(event) {
     const nome = pesquisarNomeClienteInput?.value.trim();
 
     const supabase = getSupabaseClient();
-    let query = supabase.from('cliente').select('*').order('cliente_id', { ascending: false });
+    let query = supabase.from('cliente').select('*').order('cliente_id', { ascending: true });
 
     if (!id && !tipo && !cpfCnpj && !nome) {
         const { data, error } = await query;
@@ -218,7 +218,7 @@ async function carregarClientes() {
     const { data, error } = await supabase
         .from('cliente')
         .select('*')
-        .order('cliente_id', { ascending: false });
+        .order('cliente_id', { ascending: true });
 
     if (error) {
         console.error('Erro ao carregar clientes:', error);

@@ -328,7 +328,7 @@ async function pesquisarProdutos(event) {
     let query = supabase
         .from('produto')
         .select('*, categoria_produto(ds_categoria_produto)')
-        .order('produto_id', { ascending: false });
+        .order('produto_id', { ascending: true });
 
     if (id) {
         const numericId = Number(id);

@@ -160,7 +160,7 @@ async function pesquisarCategorias(event) {
     const descricao = pesquisarDsCategoriaInput?.value.trim();
 
     const supabase = getSupabaseClient();
-    let query = supabase.from('categoria_produto').select('*').order('categoria_produto_id', { ascending: false });
+    let query = supabase.from('categoria_produto').select('*').order('categoria_produto_id', { ascending: true });
 
     if (id) {
         const numericId = Number(id);

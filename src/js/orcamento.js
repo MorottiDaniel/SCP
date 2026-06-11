@@ -149,7 +149,7 @@ async function pesquisarOrcamentos(event) {
     let query = supabase
         .from('orcamento')
         .select('*, cliente:cliente_id(nome_cliente), orcamento_item(quantidade, valor_unitario)')
-        .order('orcamento_id', { ascending: false });
+        .order('orcamento_id', { ascending: true });
 
     if (id) {
         const numId = Number(id);
