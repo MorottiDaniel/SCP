@@ -44,6 +44,7 @@ const clienteSearchInput = document.getElementById('clienteSearchInput');
 let clienteHiddenAtual   = null;
 let clienteSelectedAtual = null;
 
+// Busca todos os clientes cadastrados no Supabase
 async function fetchClientes() {
     try {
         const supabase = getSupabaseClient();
@@ -56,6 +57,7 @@ async function fetchClientes() {
     } catch (err) { console.error(err); return []; }
 }
 
+// Renderiza lista de clientes no modal de seleção
 function renderModalClientes(clientes) {
     clienteModalBody.innerHTML = '';
     if (!clientes.length) {
@@ -75,6 +77,7 @@ function renderModalClientes(clientes) {
     });
 }
 
+// Abre o modal de cliente e guarda as referências dos inputs que receberão o valor selecionado
 function openClienteModal(hiddenInput, selectedInput) {
     clienteHiddenAtual   = hiddenInput;
     clienteSelectedAtual = selectedInput;
@@ -83,6 +86,7 @@ function openClienteModal(hiddenInput, selectedInput) {
     clienteSearchInput.focus();
 }
 
+// Fecha o modal de cliente
 function closeClienteModal() {
     fecharModal(clienteModal);
 }
@@ -100,11 +104,13 @@ const pesquisarValorOperadorInput   = document.getElementById('pesquisarValorOpe
 const orcamentoListaSection         = document.getElementById('orcamentoListaSection');
 const orcamentoListaBody            = document.getElementById('orcamentoListaBody');
 
+// Soma quantidade × valor_unitario de todos os itens de um orçamento
 function calcularTotalOrcamento(orcamento) {
     return (orcamento.orcamento_item || [])
         .reduce((s, i) => s + i.quantidade * i.valor_unitario, 0);
 }
 
+// Renderiza a lista de orçamentos na tabela de resultados
 function renderizarListaOrcamentos(orcamentos, emptyMessage = 'Nenhum orçamento encontrado.') {
     orcamentoListaBody.innerHTML = '';
     if (!orcamentos.length) {
@@ -128,6 +134,7 @@ function renderizarListaOrcamentos(orcamentos, emptyMessage = 'Nenhum orçamento
     });
 }
 
+// Aplica os filtros do formulário de pesquisa e atualiza a lista de orçamentos
 async function pesquisarOrcamentos(event) {
     if (event) event.preventDefault();
 
@@ -181,6 +188,7 @@ async function pesquisarOrcamentos(event) {
     renderizarListaOrcamentos(resultados, 'Nenhum orçamento encontrado para os critérios informados.');
 }
 
+// Limpa os campos ocultos de cliente na pesquisa e reseta a tabela de resultados
 function limparPesquisaOrcamento() {
     if (pesquisarClienteIdInput)       pesquisarClienteIdInput.value       = '';
     if (pesquisarClienteSelectedInput) pesquisarClienteSelectedInput.value = '';
@@ -205,6 +213,7 @@ const itemQuantidade         = document.getElementById('itemQuantidade');
 const btnRemoverItem         = document.getElementById('btnRemoverItem');
 const btnConfirmarItem       = document.getElementById('btnConfirmarItem');
 
+// Busca produtos ativos no Supabase, com filtro opcional por descrição
 async function fetchProdutos(filtro = '') {
     try {
         const supabase = getSupabaseClient();
@@ -220,6 +229,7 @@ async function fetchProdutos(filtro = '') {
     } catch (err) { console.error(err); return []; }
 }
 
+// Renderiza lista de produtos no modal de item
 function renderProdutosModal(produtos) {
     itemProdutoBody.innerHTML = '';
     if (!produtos.length) {
@@ -241,6 +251,7 @@ function renderProdutosModal(produtos) {
     });
 }
 
+// Confirma seleção de produto: oculta a lista e exibe o painel de quantidade
 function selecionarProduto(produto) {
     produtoSelecionado = produto;
     itemProdutoSearch.classList.add('hidden');
@@ -255,6 +266,7 @@ function selecionarProduto(produto) {
     itemQuantidade.focus();
 }
 
+// Desfaz a seleção de produto e volta para a lista de busca no modal
 function limparSelecaoProduto() {
     produtoSelecionado = null;
     itemProdutoSearch.classList.remove('hidden');
@@ -267,6 +279,7 @@ function limparSelecaoProduto() {
     renderProdutosModal(produtosCache);
 }
 
+// Abre o modal de item: index=null para novo item, index=número para editar existente
 async function openItemModal(index = null) {
     itemEditandoIndex  = index;
     produtoSelecionado = null;
@@ -306,6 +319,7 @@ async function openItemModal(index = null) {
     }
 }
 
+// Fecha o modal de item e limpa o estado de edição
 function closeItemModalFn() {
     fecharModal(itemModal);
     itemEditandoIndex  = null;
@@ -314,16 +328,19 @@ function closeItemModalFn() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+// Formata string digitada para R$ (ex: "1234" → "R$ 12,34")
 function mascararValorInput(v) {
     const digits = String(v).replace(/\D/g, '');
     if (!digits) return '';
     return (parseInt(digits, 10) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+// Converte string R$ para número float (ex: "R$ 12,34" → 12.34)
 function parsearValor(v) {
     return parseFloat(String(v).replace(/[R$\s]/g, '').replace(/\./g, '').replace(',', '.')) || 0;
 }
 
+// Aplica máscara CPF (F) ou CNPJ (J) a partir de string de dígitos
 function formatarCpfCnpj(valor, tipo) {
     const v = (valor || '').replace(/\D/g, '');
     if (tipo === 'F' && v.length === 11)
@@ -333,20 +350,24 @@ function formatarCpfCnpj(valor, tipo) {
     return valor;
 }
 
+// Converte yyyy-mm-dd para dd/mm/yyyy
 function formatarData(data) {
     if (!data) return '-';
     const [ano, mes, dia] = data.split('-');
     return `${dia}/${mes}/${ano}`;
 }
 
+// Formata número como moeda BRL (ex: 12.34 → "R$ 12,34")
 function formatarValor(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+// Retorna a data de hoje em yyyy-mm-dd
 function hoje() {
     return new Date().toISOString().slice(0, 10);
 }
 
+// Retorna a data daqui N dias em yyyy-mm-dd (padrão: 7 dias)
 function dataValidadeDaqui(dias = 7) {
     const d = new Date();
     d.setDate(d.getDate() + dias);
@@ -355,6 +376,7 @@ function dataValidadeDaqui(dias = 7) {
 
 // ─── Tabela de itens ──────────────────────────────────────────────────────────
 
+// Atualiza a tabela de itens do orçamento em edição e recalcula o total geral
 function renderizarItens() {
     orcamentoItensBody.innerHTML = '';
     if (!itensOrcamento.length) {
@@ -384,11 +406,13 @@ function renderizarItens() {
 
 // ─── Formulário ───────────────────────────────────────────────────────────────
 
+// Verifica se a data de validade do orçamento em edição já passou
 function isExpirado() {
     if (!orcamentoDataValidade) return false;
     return orcamentoDataValidade < hoje();
 }
 
+// Mostra/oculta botões conforme o estado: editando, aprovado, expirado
 function atualizarBotoesEdicao() {
     const editando  = orcamentoEditandoId !== null;
     const expirado  = isExpirado();
@@ -410,6 +434,7 @@ function atualizarBotoesEdicao() {
     btnAdicionarItem?.classList.toggle('hidden', orcamentoAprovado || expirado);
 }
 
+// Reseta o formulário para cadastro de novo orçamento
 function limparFormulario() {
     orcamentoEditandoId   = null;
     orcamentoAprovado     = false;
@@ -425,6 +450,7 @@ function limparFormulario() {
     atualizarBotoesEdicao();
 }
 
+// Carrega os dados de um orçamento (com cliente e itens) no formulário de edição
 async function carregarOrcamento(id) {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
@@ -467,6 +493,7 @@ async function carregarOrcamento(id) {
     orcamentoForm?.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Salva o orçamento (INSERT ou UPDATE) com seus itens no Supabase
 async function salvarOrcamento(event) {
     event.preventDefault();
 
@@ -545,6 +572,7 @@ async function salvarOrcamento(event) {
     }
 }
 
+// Renova datas e atualiza preços dos itens de um orçamento expirado
 async function atualizarOrcamentoExpirado() {
     if (!orcamentoEditandoId || orcamentoAprovado || !isExpirado()) return;
 
@@ -598,6 +626,7 @@ async function atualizarOrcamentoExpirado() {
     alert('Orçamento atualizado com sucesso!');
 }
 
+// Valida estoque, reduz quantidade dos produtos e marca o orçamento como aprovado
 async function aprovarOrcamento() {
     if (!orcamentoEditandoId || orcamentoAprovado) return;
 
@@ -660,6 +689,7 @@ async function aprovarOrcamento() {
     alert('Orçamento aprovado com sucesso!');
 }
 
+// Exclui o orçamento em edição (os itens são removidos em cascata)
 async function excluirOrcamento() {
     if (!orcamentoEditandoId) return;
     if (!window.confirm('Deseja excluir este orçamento? Os itens também serão removidos.')) return;
@@ -679,6 +709,7 @@ async function excluirOrcamento() {
 
 // ─── PDF ──────────────────────────────────────────────────────────────────────
 
+// Gera e baixa o PDF do orçamento com cabeçalho e tabela de itens
 function gerarPdfOrcamento() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();

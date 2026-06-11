@@ -1,7 +1,10 @@
-.lista-dados td.status-aprovado { text-align: center; color: #28a745; font-weight: bold; }
+/* ─── Status na lista (aprovado / reprovado) ─────────────────────────────── */
+
+.lista-dados td.status-aprovado  { text-align: center; color: #28a745; font-weight: bold; }
 .lista-dados td.status-reprovado { text-align: center; color: #d12a4b; font-weight: bold; }
 
-/* Botão Aprovar */
+/* ─── Botões de ação do formulário ──────────────────────────────────────── */
+
 .btn-aprovar {
     background-color: #28a745;
     color: white;
@@ -12,34 +15,45 @@
 }
 .btn-aprovar:hover { background-color: #218838; }
 
-.btn-atualizar { background-color: #e67e00; color: white; padding: 8px 14px; border: none; border-radius: 4px; cursor: pointer; }
+.btn-atualizar {
+    background-color: #e67e00;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 .btn-atualizar:hover { background-color: #c46c00; }
 
+/* Botão que ocupa toda a largura do campo */
 .btn-aprovar-campo {
     width: 100%;
     padding: 10px;
     font-size: 15px;
 }
 
-/* Linha de validade: date + dias */
+/* ─── Linha de validade ──────────────────────────────────────────────────── */
+
 .validade-row {
     display: flex;
     gap: 0.5rem;
     align-items: center;
 }
 .validade-input { flex: 1; }
-.dias-input { width: 70px; }
-.dias-label { font-size: 13px; color: #666; white-space: nowrap; }
+.dias-input     { width: 70px; }
+.dias-label     { font-size: 13px; color: #666; white-space: nowrap; }
 
-/* Tfoot da tabela de itens */
+/* ─── Tabela de itens do orçamento ──────────────────────────────────────── */
+
 #orcamentoItensSection tfoot td {
     padding: 10px;
     border: 1px solid #cccccc;
     background-color: #f4f4f4;
 }
 
+/* ─── Layout em grade (formulários | itens + lista) ─────────────────────── */
+/* Coluna esquerda fixa (420px) + coluna direita flexível */
 
-/* Grid 2×2: cadastro↔itens na linha 1, pesquisa↔lista na linha 2 */
 .orcamento-layout {
     display: grid !important;
     grid-template-columns: 420px 1fr;
@@ -47,7 +61,7 @@
     align-items: start;
 }
 
-/* Dissolve os wrappers no grid para que os filhos virem grid items */
+/* Dissolve os wrappers para que os filhos se tornem grid items diretos */
 .orcamento-layout .area-formularios,
 .orcamento-layout .orcamento-right-panel {
     display: contents;
@@ -57,6 +71,8 @@
 .orcamento-layout #orcamentoSearchForm   { grid-column: 1; grid-row: 2; }
 .orcamento-layout #orcamentoItensSection { grid-column: 2; grid-row: 1; }
 .orcamento-layout #orcamentoListaSection { grid-column: 2; grid-row: 2; }
+
+/* ─── Responsivo ─────────────────────────────────────────────────────────── */
 
 @media (max-width: 1120px) {
     .orcamento-layout {
