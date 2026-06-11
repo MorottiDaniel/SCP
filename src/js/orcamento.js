@@ -431,6 +431,7 @@ function atualizarBotoesEdicao() {
     // Salvar e +Item bloqueados quando aprovado ou expirado
     const bloquear = editando && (orcamentoAprovado || expirado);
     btnSalvarOrcamento?.classList.toggle('hidden', bloquear);
+    if (btnSalvarOrcamento) btnSalvarOrcamento.textContent = editando ? 'Atualizar' : 'Salvar';
     btnAdicionarItem?.classList.toggle('hidden', orcamentoAprovado || expirado);
 }
 

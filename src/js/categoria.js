@@ -7,6 +7,7 @@ const dsCategoriaInput = document.getElementById('ds_categoria_produto');
 const btnCancelarEdicaoCategoria = document.getElementById('btnCancelarEdicaoCategoria');
 const btnExcluirCategoria        = document.getElementById('btnExcluirCategoria');
 const btnLimparCategoria         = document.getElementById('btnLimparCategoria');
+const btnSalvarCategoria         = document.getElementById('btnSalvarCategoria');
 const categoriaFormTitulo        = document.getElementById('categoriaFormTitulo');
 const campoProdutosCategoria     = document.getElementById('campoProdutosCategoria');
 const pesquisarCategoriaIdInput = document.getElementById('pesquisarCategoriaId');
@@ -65,6 +66,7 @@ function atualizarBotoesEdicaoCategoria() {
     }
     campoProdutosCategoria?.classList.toggle('hidden', !editando);
     btnLimparCategoria?.classList.toggle('hidden', editando);
+    if (btnSalvarCategoria) btnSalvarCategoria.textContent = editando ? 'Atualizar' : 'Salvar';
 }
 
 function limparFormularioCategoria() {

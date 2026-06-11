@@ -15,6 +15,7 @@ const statusInput = document.getElementById('status');
 const btnCancelarEdicaoProduto = document.getElementById('btnCancelarEdicaoProduto');
 const btnExcluirProduto        = document.getElementById('btnExcluirProduto');
 const btnLimparProduto         = document.getElementById('btnLimparProduto');
+const btnSalvarProduto         = document.getElementById('btnSalvarProduto');
 const produtoFormTitulo        = document.getElementById('produtoFormTitulo');
 
 const pesquisarProdutoIdInput = document.getElementById('pesquisarProdutoId');
@@ -184,6 +185,7 @@ function atualizarBotoesEdicao() {
     btnCancelarEdicaoProduto?.classList.toggle('hidden', !editando);
     btnExcluirProduto?.classList.toggle('hidden', !editando);
     btnLimparProduto?.classList.toggle('hidden', editando);
+    if (btnSalvarProduto) btnSalvarProduto.textContent = editando ? 'Atualizar' : 'Salvar';
 }
 
 function limparFormularioProduto() {

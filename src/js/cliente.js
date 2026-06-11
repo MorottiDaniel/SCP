@@ -13,6 +13,7 @@ const pesquisarNomeClienteInput = document.getElementById('pesquisarNomeCliente'
 const btnCancelarEdicao       = document.getElementById('btnCancelarEdicao');
 const btnExcluirCliente       = document.getElementById('btnExcluirCliente');
 const btnLimparCliente        = document.getElementById('btnLimparCliente');
+const btnSalvarCliente        = document.getElementById('btnSalvarCliente');
 const clienteFormTitulo       = document.getElementById('clienteFormTitulo');
 const campoOrcamentosCliente  = document.getElementById('campoOrcamentosCliente');
 
@@ -209,6 +210,7 @@ function atualizarBotoesEdicao() {
     btnExcluirCliente.classList.toggle('hidden', !editando);
     campoOrcamentosCliente?.classList.toggle('hidden', !editando);
     btnLimparCliente?.classList.toggle('hidden', editando);
+    if (btnSalvarCliente) btnSalvarCliente.textContent = editando ? 'Atualizar' : 'Salvar';
 }
 
 async function carregarClientes() {
