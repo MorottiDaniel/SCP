@@ -23,6 +23,7 @@ function obterNavbarHTML() {
         </div>
       </div>
 
+      <button class="menu-button" onclick="window.location.href='/src/menu.html'">Menu</button>
       <button class="menu-button sair">Sair</button>
     </nav>
   `;
