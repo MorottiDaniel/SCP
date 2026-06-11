@@ -124,7 +124,7 @@ async function salvarCategoria(event) {
 
     const supabase = getSupabaseClient();
     const sucessoCategoria = document.getElementById('sucessoCategoria');
-    sucessoCategoria.style.display = 'none';
+    sucessoCategoria.classList.add('hidden');
 
     if (categoriaEditandoId) {
         const { error } = await supabase
@@ -144,8 +144,8 @@ async function salvarCategoria(event) {
         await pesquisarCategorias();
         carregarCategoriaNoFormulario(data.categoria_produto_id);
         sucessoCategoria.textContent = 'Categoria cadastrada!';
-        sucessoCategoria.style.display = 'block';
-        setTimeout(() => { sucessoCategoria.style.display = 'none'; }, 3000);
+        sucessoCategoria.classList.remove('hidden');
+        setTimeout(() => { sucessoCategoria.classList.add('hidden'); }, 3000);
     }
 }
 

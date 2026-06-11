@@ -80,17 +80,6 @@
     border-top: 1px solid #eee;
 }
 
-/* Botão cancelar genérico */
-.btn-cancelar {
-    background-color: #6c757d;
-    color: white;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-cancelar:hover { background-color: #565e64; }
 
 /* Grid 2×2: cadastro↔itens na linha 1, pesquisa↔lista na linha 2 */
 .orcamento-layout {

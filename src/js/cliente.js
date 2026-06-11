@@ -290,7 +290,7 @@ async function salvarCliente(event) {
     const nome       = nomeClienteInput.value.trim();
     const erroCpfCnpj = document.getElementById('erroCpfCnpj');
 
-    erroCpfCnpj.style.display = 'none';
+    erroCpfCnpj.classList.add('hidden');
 
     if (!tipo || !cpfCnpjBruto || !nome) {
         alert('Preencha todos os campos obrigatórios.');
@@ -299,12 +299,12 @@ async function salvarCliente(event) {
 
     if (tipo === 'F' && !validarCPF(cpfCnpjBruto)) {
         erroCpfCnpj.textContent = 'CPF inválido.';
-        erroCpfCnpj.style.display = 'block';
+        erroCpfCnpj.classList.remove('hidden');
         return;
     }
     if (tipo === 'J' && !validarCNPJ(cpfCnpjBruto)) {
         erroCpfCnpj.textContent = 'CNPJ inválido.';
-        erroCpfCnpj.style.display = 'block';
+        erroCpfCnpj.classList.remove('hidden');
         return;
     }
 
@@ -317,7 +317,7 @@ async function salvarCliente(event) {
     const supabase = getSupabaseClient();
 
     const sucessoCliente = document.getElementById('sucessoCliente');
-    sucessoCliente.style.display = 'none';
+    sucessoCliente.classList.add('hidden');
 
     if (clienteId) {
         const { error } = await supabase
@@ -337,8 +337,8 @@ async function salvarCliente(event) {
         await carregarClientes();
         carregarClienteNoFormulario(data.cliente_id);
         sucessoCliente.textContent = 'Cliente cadastrado!';
-        sucessoCliente.style.display = 'block';
-        setTimeout(() => { sucessoCliente.style.display = 'none'; }, 3000);
+        sucessoCliente.classList.remove('hidden');
+        setTimeout(() => { sucessoCliente.classList.add('hidden'); }, 3000);
     }
 }
 
@@ -361,7 +361,7 @@ window.addEventListener('DOMContentLoaded', function () {
         atualizarCampoCpfCnpj(this.value);
         cpfCnpjInput.value    = '';
         cpfCnpjInput.disabled = !this.value;
-        document.getElementById('erroCpfCnpj').style.display = 'none';
+        document.getElementById('erroCpfCnpj').classList.add('hidden');
     });
 
     cpfCnpjInput.addEventListener('input', function () {

@@ -311,6 +311,17 @@ body {
     background-color: #d12a4b;
 }
 
+.btn-cancelar {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-cancelar:hover { background-color: #565e64; }
+
 @media (max-width: 700px) {
     .pagina-cadastro {
         padding: 20px;
@@ -337,3 +348,71 @@ body {
 /* Utilitários genéricos */
 .hidden { display: none; }
 .text-center { text-align: center; }
+
+/* Mensagens de feedback */
+.msg-erro {
+    color: #d12a4b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.msg-sucesso {
+    color: #198754;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Layout de campo com operador (=, <, >) */
+.campo-operador {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.operador-select {
+    width: 4rem;
+}
+
+.flex-input {
+    flex: 1;
+}
+
+/* Botões de ação dentro de campo */
+.campo-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-campo-verde {
+    flex: 1;
+    padding: 10px;
+    font-size: 15px;
+    background: #198754;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-campo-azul {
+    flex: 1;
+    padding: 10px;
+    font-size: 15px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-campo-azul-full {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

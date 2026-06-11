@@ -82,7 +82,7 @@
                     <button type="button" id="btnExcluirProduto" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
-                <p id="sucessoProduto" style="display:none;color:green;font-size:0.9rem;margin-top:0.5rem;"></p>
+                <p id="sucessoProduto" class="msg-sucesso hidden"></p>
             </form>
 
             <form id="produtoSearchForm" class="formulario">
@@ -131,25 +131,25 @@
 
                 <div class="campo">
                     <label for="pesquisarQuantidadeEstoque">Estoque</label>
-                    <div style="display:flex;gap:0.5rem;">
-                        <select id="pesquisarEstoqueOperador" name="estoque_operador" style="width:4rem;">
+                    <div class="campo-operador">
+                        <select id="pesquisarEstoqueOperador" name="estoque_operador" class="operador-select">
                             <option value="=">=</option>
                             <option value="<">&lt;</option>
                             <option value=">">&gt;</option>
                         </select>
-                        <input type="number" id="pesquisarQuantidadeEstoque" name="quantidade_estoque" placeholder="0" min="0" step="1" style="flex:1;">
+                        <input type="number" id="pesquisarQuantidadeEstoque" name="quantidade_estoque" placeholder="0" min="0" step="1" class="flex-input">
                     </div>
                 </div>
 
                 <div class="campo">
                     <label for="pesquisarValorVenda">Valor de Venda</label>
-                    <div style="display:flex;gap:0.5rem;">
-                        <select id="pesquisarValorOperador" name="valor_operador" style="width:4rem;">
+                    <div class="campo-operador">
+                        <select id="pesquisarValorOperador" name="valor_operador" class="operador-select">
                             <option value="=">=</option>
                             <option value="<">&lt;</option>
                             <option value=">">&gt;</option>
                         </select>
-                        <input type="text" id="pesquisarValorVenda" name="valor_venda" placeholder="R$ 0,00" style="flex:1;">
+                        <input type="text" id="pesquisarValorVenda" name="valor_venda" placeholder="R$ 0,00" class="flex-input">
                     </div>
                 </div>
 

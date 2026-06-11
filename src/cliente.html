@@ -36,7 +36,7 @@
                 <div class="campo">
                     <label for="cpf_cnpj_cliente">CPF/CNPJ</label>
                     <input type="text" id="cpf_cnpj_cliente" name="cpf_cnpj_cliente" placeholder="Selecione o tipo primeiro" maxlength="18" disabled required>
-                    <p id="erroCpfCnpj" style="display:none;color:red;font-size:0.85rem;margin-top:4px;"></p>
+                    <p id="erroCpfCnpj" class="msg-erro hidden"></p>
                 </div>
 
                 <div class="campo">
@@ -45,9 +45,9 @@
                 </div>
 
                 <div class="campo hidden" id="campoOrcamentosCliente">
-                    <div style="display:flex;gap:8px;">
-                        <button type="button" id="btnCriarOrcamentoCliente" style="flex:1;padding:10px;font-size:15px;background:#198754;color:white;border:none;border-radius:4px;cursor:pointer;">Criar Orçamento</button>
-                        <button type="button" id="btnVerOrcamentosCliente" style="flex:1;padding:10px;font-size:15px;background:#0d6efd;color:white;border:none;border-radius:4px;cursor:pointer;">Lista de Orçamentos</button>
+                    <div class="campo-acoes">
+                        <button type="button" id="btnCriarOrcamentoCliente" class="btn-campo-verde">Criar Orçamento</button>
+                        <button type="button" id="btnVerOrcamentosCliente" class="btn-campo-azul">Lista de Orçamentos</button>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     <button type="button" id="btnExcluirCliente" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
-                <p id="sucessoCliente" style="display:none;color:green;font-size:0.9rem;margin-top:0.5rem;"></p>
+                <p id="sucessoCliente" class="msg-sucesso hidden"></p>
             </form>
 
             <form class="formulario" id="clienteSearchForm">

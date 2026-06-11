@@ -249,6 +249,7 @@ function selecionarProduto(produto) {
     itemProdutoNome.textContent = `${produto.produto_id} - ${produto.ds_produto}`;
     itemEstoqueDisponivel.value = produto.quantidade_estoque;
     itemValorUnitario.value     = formatarValor(produto.valor_venda ?? produto.valor_unitario ?? 0);
+    itemValorUnitario.disabled  = true;
     itemQuantidade.value        = '';
     itemQuantidade.max          = produto.quantidade_estoque;
     itemQuantidade.focus();
@@ -282,6 +283,7 @@ async function openItemModal(index = null) {
         btnRemoverItem.classList.add('hidden');
     }
 
+    itemValorUnitario.disabled = false;
     itemModal.classList.add('open');
 
     const produtos = await fetchProdutos();
@@ -542,8 +544,8 @@ async function salvarOrcamento(event) {
         await pesquisarOrcamentos();
         await carregarOrcamento(orcamentoId);
         sucessoOrcamento.textContent = 'Orçamento cadastrado!';
-        sucessoOrcamento.style.display = 'block';
-        setTimeout(() => { sucessoOrcamento.style.display = 'none'; }, 3000);
+        sucessoOrcamento.classList.remove('hidden');
+        setTimeout(() => { sucessoOrcamento.classList.add('hidden'); }, 3000);
     }
 }
 

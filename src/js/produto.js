@@ -259,7 +259,7 @@ async function salvarProduto(event) {
 
     const supabase = getSupabaseClient();
     const sucessoProduto = document.getElementById('sucessoProduto');
-    sucessoProduto.style.display = 'none';
+    sucessoProduto.classList.add('hidden');
 
     if (produtoEditandoId) {
         const { error } = await supabase
@@ -280,8 +280,8 @@ async function salvarProduto(event) {
         await pesquisarProdutos();
         carregarProdutoNoFormulario(data.produto_id);
         sucessoProduto.textContent = 'Produto cadastrado!';
-        sucessoProduto.style.display = 'block';
-        setTimeout(() => { sucessoProduto.style.display = 'none'; }, 3000);
+        sucessoProduto.classList.remove('hidden');
+        setTimeout(() => { sucessoProduto.classList.add('hidden'); }, 3000);
     }
 }
 
