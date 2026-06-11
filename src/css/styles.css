@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
 }
 
 .login-container {
@@ -187,6 +188,7 @@ body {
     border: 1px solid #cccccc;
     border-radius: 8px;
     box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .formulario h1 {
@@ -257,6 +259,7 @@ body {
     border-radius: 8px;
     align-self: stretch;
     box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .lista-dados h1 {
