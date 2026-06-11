@@ -63,6 +63,7 @@
                     <button type="button" id="btnExcluirOrcamento" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" id="btnSalvarOrcamento" class="btn-salvar">Salvar</button>
                 </div>
+                <p id="sucessoOrcamento" style="display:none;color:green;font-size:0.9rem;margin-top:0.5rem;"></p>
             </form>
             <form id="orcamentoSearchForm" class="formulario">
                 <h1>Pesquisar Orçamento</h1>
@@ -107,7 +108,7 @@
                             <option value="<">&lt;</option>
                             <option value=">">&gt;</option>
                         </select>
-                        <input type="number" id="pesquisarValorTotal" placeholder="0,00" min="0" step="0.01" style="flex:1;">
+                        <input type="text" id="pesquisarValorTotal" placeholder="R$ 0,00" style="flex:1;">
                     </div>
                 </div>
 
@@ -236,7 +237,7 @@
                     </div>
                     <div class="campo">
                         <label for="itemValorUnitario">Valor unitário</label>
-                        <input type="number" id="itemValorUnitario" min="0" step="0.01" placeholder="0,00">
+                        <input type="text" id="itemValorUnitario" placeholder="R$ 0,00">
                     </div>
                 </div>
                 <div class="campo">

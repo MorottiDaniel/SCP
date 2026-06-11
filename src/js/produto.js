@@ -114,6 +114,16 @@ function closeModal() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+function mascararValorInput(v) {
+    const digits = String(v).replace(/\D/g, '');
+    if (!digits) return '';
+    return (parseInt(digits, 10) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function parsearValor(v) {
+    return parseFloat(String(v).replace(/[R$\s]/g, '').replace(/\./g, '').replace(',', '.')) || 0;
+}
+
 function formatarValor(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
@@ -201,7 +211,7 @@ function carregarProdutoNoFormulario(produtoId) {
     }
     if (dsProdutoInput) dsProdutoInput.value = produto.ds_produto;
     if (marcaInput) marcaInput.value = produto.marca ?? '';
-    if (valorVendaInput) valorVendaInput.value = produto.valor_venda;
+    if (valorVendaInput) valorVendaInput.value = formatarValor(produto.valor_venda);
     if (quantidadeEstoqueInput) quantidadeEstoqueInput.value = produto.quantidade_estoque;
     if (observacaoInput) observacaoInput.value = produto.observacao ?? '';
     if (dataCadastroInput) dataCadastroInput.value = formatarData(produto.data_cadastro);
@@ -241,35 +251,38 @@ async function salvarProduto(event) {
         categoria_produto_id: Number(categoriaId),
         ds_produto: dsProduto,
         marca: marcaInput?.value.trim() || null,
-        valor_venda: Number(valorVenda),
+        valor_venda: parsearValor(valorVenda),
         quantidade_estoque: Number(quantidadeEstoque),
         observacao: observacaoInput?.value.trim() || null,
         status: statusInput?.value || 'A',
     };
 
     const supabase = getSupabaseClient();
-    let result;
+    const sucessoProduto = document.getElementById('sucessoProduto');
+    sucessoProduto.style.display = 'none';
 
     if (produtoEditandoId) {
-        result = await supabase
+        const { error } = await supabase
             .from('produto')
             .update(payload)
             .eq('produto_id', produtoEditandoId);
+        if (error) { alert('Erro ao salvar produto: ' + error.message); return; }
+        limparFormularioProduto();
+        produtoForm.reset();
+        await pesquisarProdutos();
     } else {
-        result = await supabase
+        const { data, error } = await supabase
             .from('produto')
-            .insert([payload]);
+            .insert([payload])
+            .select('produto_id')
+            .single();
+        if (error) { alert('Erro ao salvar produto: ' + error.message); return; }
+        await pesquisarProdutos();
+        carregarProdutoNoFormulario(data.produto_id);
+        sucessoProduto.textContent = 'Produto cadastrado!';
+        sucessoProduto.style.display = 'block';
+        setTimeout(() => { sucessoProduto.style.display = 'none'; }, 3000);
     }
-
-    if (result.error) {
-        console.error('Erro ao salvar produto:', result.error);
-        alert('Erro ao salvar produto: ' + result.error.message);
-        return;
-    }
-
-    limparFormularioProduto();
-    produtoForm.reset();
-    await pesquisarProdutos();
 }
 
 async function excluirProduto() {
@@ -337,13 +350,11 @@ async function pesquisarProdutos(event) {
             else if (estoqueOperador === '>') query = query.gt('quantidade_estoque', numEstoque);
         }
     }
-    if (valorVenda !== '') {
-        const numValor = Number(valorVenda);
-        if (!Number.isNaN(numValor)) {
-            if (valorOperador === '=') query = query.eq('valor_venda', numValor);
-            else if (valorOperador === '<') query = query.lt('valor_venda', numValor);
-            else if (valorOperador === '>') query = query.gt('valor_venda', numValor);
-        }
+    if (valorVenda) {
+        const numValor = parsearValor(valorVenda);
+        if (valorOperador === '=') query = query.eq('valor_venda', numValor);
+        else if (valorOperador === '<') query = query.lt('valor_venda', numValor);
+        else if (valorOperador === '>') query = query.gt('valor_venda', numValor);
     }
     if (status) query = query.eq('status', status);
 
@@ -403,6 +414,13 @@ window.addEventListener('DOMContentLoaded', async function () {
     // Fechar modal clicando fora
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
+    });
+
+    valorVendaInput?.addEventListener('input', function () {
+        this.value = mascararValorInput(this.value);
+    });
+    pesquisarValorVendaInput?.addEventListener('input', function () {
+        this.value = mascararValorInput(this.value);
     });
 
     // Formulário de cadastro

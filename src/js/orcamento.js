@@ -65,7 +65,7 @@ function renderModalClientes(clientes) {
     clientes.forEach(c => {
         const tr = document.createElement('tr');
         tr.className = 'modal-row';
-        tr.innerHTML = `<td>${c.cliente_id}</td><td>${c.nome_cliente}</td><td>${c.cpf_cnpj_cliente}</td>`;
+        tr.innerHTML = `<td>${c.cliente_id}</td><td>${c.nome_cliente}</td><td>${formatarCpfCnpj(c.cpf_cnpj_cliente, c.tipo_cliente)}</td>`;
         tr.addEventListener('click', () => {
             if (clienteHiddenAtual)   clienteHiddenAtual.value   = c.cliente_id;
             if (clienteSelectedAtual) clienteSelectedAtual.value = `${c.cliente_id} - ${c.nome_cliente}`;
@@ -167,17 +167,15 @@ async function pesquisarOrcamentos(event) {
 
     let resultados = data || [];
 
-    if (valorTotal !== '') {
-        const numValor = Number(valorTotal);
-        if (!Number.isNaN(numValor)) {
-            resultados = resultados.filter(oc => {
-                const t = calcularTotalOrcamento(oc);
-                if (valorOp === '=') return Math.abs(t - numValor) < 0.001;
-                if (valorOp === '<') return t < numValor;
-                if (valorOp === '>') return t > numValor;
-                return true;
-            });
-        }
+    if (valorTotal) {
+        const numValor = parsearValor(valorTotal);
+        resultados = resultados.filter(oc => {
+            const t = calcularTotalOrcamento(oc);
+            if (valorOp === '=') return Math.abs(t - numValor) < 0.001;
+            if (valorOp === '<') return t < numValor;
+            if (valorOp === '>') return t > numValor;
+            return true;
+        });
     }
 
     renderizarListaOrcamentos(resultados, 'Nenhum orçamento encontrado para os critérios informados.');
@@ -250,7 +248,7 @@ function selecionarProduto(produto) {
     itemProdutoSelecionado.classList.remove('hidden');
     itemProdutoNome.textContent = `${produto.produto_id} - ${produto.ds_produto}`;
     itemEstoqueDisponivel.value = produto.quantidade_estoque;
-    itemValorUnitario.value     = produto.valor_venda ?? produto.valor_unitario ?? '';
+    itemValorUnitario.value     = formatarValor(produto.valor_venda ?? produto.valor_unitario ?? 0);
     itemQuantidade.value        = '';
     itemQuantidade.max          = produto.quantidade_estoque;
     itemQuantidade.focus();
@@ -301,7 +299,7 @@ async function openItemModal(index = null) {
             quantidade_estoque: estoqueAtual,
             valor_venda:        precoAtual,
         });
-        itemValorUnitario.value    = precoAtual;
+        itemValorUnitario.value    = formatarValor(precoAtual);
         itemValorUnitario.disabled = true;
         itemQuantidade.value       = item.quantidade;
     } else {
@@ -317,6 +315,25 @@ function closeItemModalFn() {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function mascararValorInput(v) {
+    const digits = String(v).replace(/\D/g, '');
+    if (!digits) return '';
+    return (parseInt(digits, 10) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function parsearValor(v) {
+    return parseFloat(String(v).replace(/[R$\s]/g, '').replace(/\./g, '').replace(',', '.')) || 0;
+}
+
+function formatarCpfCnpj(valor, tipo) {
+    const v = (valor || '').replace(/\D/g, '');
+    if (tipo === 'F' && v.length === 11)
+        return `${v.slice(0,3)}.${v.slice(3,6)}.${v.slice(6,9)}-${v.slice(9)}`;
+    if (tipo === 'J' && v.length === 14)
+        return `${v.slice(0,2)}.${v.slice(2,5)}.${v.slice(5,8)}/${v.slice(8,12)}-${v.slice(12)}`;
+    return valor;
+}
 
 function formatarData(data) {
     if (!data) return '-';
@@ -516,9 +533,18 @@ async function salvarOrcamento(event) {
 
     if (errItens) { alert('Erro ao salvar itens: ' + errItens.message); return; }
 
-    limparFormulario();
-    orcamentoForm.reset();
-    await pesquisarOrcamentos();
+    if (orcamentoEditandoId) {
+        limparFormulario();
+        orcamentoForm.reset();
+        await pesquisarOrcamentos();
+    } else {
+        const sucessoOrcamento = document.getElementById('sucessoOrcamento');
+        await pesquisarOrcamentos();
+        await carregarOrcamento(orcamentoId);
+        sucessoOrcamento.textContent = 'Orçamento cadastrado!';
+        sucessoOrcamento.style.display = 'block';
+        setTimeout(() => { sucessoOrcamento.style.display = 'none'; }, 3000);
+    }
 }
 
 async function atualizarOrcamentoExpirado() {
@@ -780,6 +806,14 @@ window.addEventListener('DOMContentLoaded', async function () {
 
     // ── Modal de item ─────────────────────────────────────────────────────────
 
+    itemValorUnitario?.addEventListener('input', function () {
+        this.value = mascararValorInput(this.value);
+    });
+
+    pesquisarValorTotalInput?.addEventListener('input', function () {
+        this.value = mascararValorInput(this.value);
+    });
+
     btnAdicionarItem?.addEventListener('click', () => openItemModal(null));
 
     document.getElementById('closeItemModal')?.addEventListener('click', closeItemModalFn);
@@ -799,14 +833,14 @@ window.addEventListener('DOMContentLoaded', async function () {
         if (!produtoSelecionado) { alert('Selecione um produto.'); return; }
 
         const qtd       = Number(itemQuantidade.value);
-        const valorUnit = Number(itemValorUnitario.value);
+        const valorUnit = parsearValor(itemValorUnitario.value);
 
         if (!qtd || qtd < 1) { alert('Digite uma quantidade válida.'); return; }
         if (qtd > produtoSelecionado.quantidade_estoque) {
             alert(`Quantidade máxima disponível em estoque: ${produtoSelecionado.quantidade_estoque}.`);
             return;
         }
-        if (isNaN(valorUnit) || valorUnit < 0) { alert('Valor unitário inválido.'); return; }
+        if (valorUnit < 0) { alert('Valor unitário inválido.'); return; }
 
         const novoItem = {
             produto_id:         produtoSelecionado.produto_id,

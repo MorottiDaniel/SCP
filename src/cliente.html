@@ -35,7 +35,8 @@
 
                 <div class="campo">
                     <label for="cpf_cnpj_cliente">CPF/CNPJ</label>
-                    <input type="text" id="cpf_cnpj_cliente" name="cpf_cnpj_cliente" placeholder="Digite o CPF ou CNPJ" required>
+                    <input type="text" id="cpf_cnpj_cliente" name="cpf_cnpj_cliente" placeholder="Selecione o tipo primeiro" maxlength="18" disabled required>
+                    <p id="erroCpfCnpj" style="display:none;color:red;font-size:0.85rem;margin-top:4px;"></p>
                 </div>
 
                 <div class="campo">
@@ -56,6 +57,7 @@
                     <button type="button" id="btnExcluirCliente" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" class="btn-salvar">Salvar</button>
                 </div>
+                <p id="sucessoCliente" style="display:none;color:green;font-size:0.9rem;margin-top:0.5rem;"></p>
             </form>
 
             <form class="formulario" id="clienteSearchForm">

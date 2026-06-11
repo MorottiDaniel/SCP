@@ -123,27 +123,30 @@ async function salvarCategoria(event) {
     }
 
     const supabase = getSupabaseClient();
-    let result;
+    const sucessoCategoria = document.getElementById('sucessoCategoria');
+    sucessoCategoria.style.display = 'none';
 
     if (categoriaEditandoId) {
-        result = await supabase
+        const { error } = await supabase
             .from('categoria_produto')
             .update({ ds_categoria_produto: descricao })
             .eq('categoria_produto_id', categoriaEditandoId);
+        if (error) { alert('Erro ao salvar categoria: ' + error.message); return; }
+        limparFormularioCategoria();
+        await pesquisarCategorias();
     } else {
-        result = await supabase
+        const { data, error } = await supabase
             .from('categoria_produto')
-            .insert([{ ds_categoria_produto: descricao }]);
+            .insert([{ ds_categoria_produto: descricao }])
+            .select('categoria_produto_id')
+            .single();
+        if (error) { alert('Erro ao salvar categoria: ' + error.message); return; }
+        await pesquisarCategorias();
+        carregarCategoriaNoFormulario(data.categoria_produto_id);
+        sucessoCategoria.textContent = 'Categoria cadastrada!';
+        sucessoCategoria.style.display = 'block';
+        setTimeout(() => { sucessoCategoria.style.display = 'none'; }, 3000);
     }
-
-    if (result.error) {
-        console.error('Erro ao salvar categoria:', result.error);
-        alert('Erro ao salvar categoria: ' + result.error.message);
-        return;
-    }
-
-    limparFormularioCategoria();
-    await pesquisarCategorias();
 }
 
 async function pesquisarCategorias(event) {
