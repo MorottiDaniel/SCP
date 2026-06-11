@@ -103,13 +103,13 @@ function renderModalCategorias(categorias) {
 }
 
 function openModal() {
-    modal.classList.add('open');
+    abrirModal(modal);
     categoriaSearchInput.value = '';
     categoriaSearchInput.focus();
 }
 
 function closeModal() {
-    modal.classList.remove('open');
+    fecharModal(modal);
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -412,9 +412,7 @@ window.addEventListener('DOMContentLoaded', async function () {
     });
 
     // Fechar modal clicando fora
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
+    configurarOverlayClose(modal, closeModal);
 
     valorVendaInput?.addEventListener('input', function () {
         this.value = mascararValorInput(this.value);

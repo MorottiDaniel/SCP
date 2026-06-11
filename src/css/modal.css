@@ -1,0 +1,83 @@
+/* ─── Modal genérico ──────────────────────────────────────────────────────── */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+.modal-overlay.open { display: block; }
+
+.modal-box {
+    background: #fff;
+    max-width: 720px;
+    margin: 60px auto;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.modal-title { margin: 0; font-size: 18px; }
+
+.modal-close { font-size: 18px; background: transparent; border: none; cursor: pointer; }
+
+.modal-search { margin-bottom: 8px; }
+.modal-search input { width: 100%; padding: 6px; box-sizing: border-box; }
+
+.modal-body { max-height: 360px; overflow: auto; }
+
+.modal-table { width: 100%; border-collapse: collapse; }
+.modal-table th,
+.modal-table td { text-align: left; padding: 6px; border-bottom: 1px solid #ddd; }
+.modal-empty { padding: 8px; text-align: center; color: #666; }
+.modal-row { cursor: pointer; }
+.modal-row td { padding: 6px; border-bottom: 1px solid #eee; }
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* ─── Modal de item (orçamento) ───────────────────────────────────────────── */
+
+.item-modal-box { max-width: 560px; }
+.item-modal-body { max-height: 200px; }
+
+.item-selecionado {
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    margin-top: 8px;
+    background: #f9f9f9;
+}
+
+.item-selecionado-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item-produto-nome { font-weight: bold; font-size: 15px; }
+
+.btn-limpar-produto {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    color: #d12a4b;
+    padding: 0 4px;
+}

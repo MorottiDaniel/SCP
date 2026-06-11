@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/src/css/styles.css">
     <link rel="stylesheet" href="/src/css/produto.css">
     <link rel="stylesheet" href="/src/css/orcamento.css">
+    <link rel="stylesheet" href="/src/css/modal.css">
 </head>
 
 <body>
@@ -30,14 +31,15 @@
                     <label>Cliente</label>
                     <div class="categoria-row">
                         <input type="hidden" id="cliente_id" name="cliente_id">
-                        <input type="text" id="clienteSelectedInput" disabled placeholder="Nenhum" class="categoria-input">
+                        <input type="text" id="clienteSelectedInput" disabled placeholder="Nenhum"
+                            class="categoria-input">
                         <button type="button" id="clienteSelectBtn" class="btn-salvar">Selecionar</button>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label for="data_orcamento">Data Orçamento</label>
-                    <input type="date" id="data_orcamento" name="data_orcamento" disabled>
+                    <input type="text" id="data_orcamento" name="data_orcamento" disabled>
                 </div>
 
                 <div class="campo">
@@ -46,20 +48,24 @@
                 </div>
 
                 <div class="campo hidden" id="campoAprovar">
-                    <button type="button" id="btnAprovarOrcamento" class="btn-aprovar btn-aprovar-campo">Aprovar Orçamento</button>
+                    <button type="button" id="btnAprovarOrcamento" class="btn-aprovar btn-aprovar-campo">Aprovar
+                        Orçamento</button>
                 </div>
 
                 <div class="campo hidden" id="campoAtualizar">
-                    <button type="button" id="btnAtualizarOrcamento" class="btn-atualizar btn-aprovar-campo">Atualizar Orçamento</button>
+                    <button type="button" id="btnAtualizarOrcamento" class="btn-atualizar btn-aprovar-campo">Atualizar
+                        Orçamento</button>
                 </div>
 
                 <div class="campo hidden" id="campoVisualizarPdf">
-                    <button type="button" id="btnVisualizarPdf" class="btn-salvar btn-aprovar-campo">Visualizar Orçamento</button>
+                    <button type="button" id="btnVisualizarPdf" class="btn-salvar btn-aprovar-campo">Visualizar
+                        Orçamento</button>
                 </div>
 
                 <div class="botoes">
                     <button type="reset" id="btnLimparOrcamento">Limpar</button>
-                    <button type="button" id="btnCancelarEdicaoOrcamento" class="btn-cancelar hidden">Cancelar edição</button>
+                    <button type="button" id="btnCancelarEdicaoOrcamento" class="btn-cancelar hidden">Cancelar
+                        edição</button>
                     <button type="button" id="btnExcluirOrcamento" class="btn-excluir hidden">Excluir</button>
                     <button type="submit" id="btnSalvarOrcamento" class="btn-salvar">Salvar</button>
                 </div>
@@ -77,7 +83,8 @@
                     <label>Cliente</label>
                     <div class="categoria-row">
                         <input type="hidden" id="pesquisarClienteId" name="cliente_id">
-                        <input type="text" id="pesquisarClienteSelectedInput" disabled placeholder="Nenhum" class="categoria-input">
+                        <input type="text" id="pesquisarClienteSelectedInput" disabled placeholder="Nenhum"
+                            class="categoria-input">
                         <button type="button" id="pesquisarClienteSelectBtn" class="btn-salvar">Selecionar</button>
                     </div>
                 </div>
@@ -122,54 +129,56 @@
         <!-- DIREITA: lista de orçamentos + itens -->
         <div class="orcamento-right-panel">
 
-        <section class="lista-dados" id="orcamentoItensSection">
-            <h1>Itens do Orçamento</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Qtd</th>
-                        <th>Valor Unit.</th>
-                        <th>Total</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="orcamentoItensBody">
-                    <tr>
-                        <td colspan="5" class="text-center">Nenhum item adicionado.</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3"><strong>Total Geral</strong></td>
-                        <td id="orcamentoTotalGeral"><strong>R$ 0,00</strong></td>
-                        <td>
-                            <button type="button" id="btnAdicionarItem" class="btn-salvar">+ Item</button>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </section>
+            <section class="lista-dados" id="orcamentoItensSection">
+                <h1>Itens do Orçamento</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Qtd</th>
+                            <th>Valor Unit.</th>
+                            <th>Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orcamentoItensBody">
+                        <tr>
+                            <td colspan="5" class="text-center">Nenhum item adicionado.</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><strong>Total Geral</strong></td>
+                            <td id="orcamentoTotalGeral"><strong>R$ 0,00</strong></td>
+                            <td>
+                                <button type="button" id="btnAdicionarItem" class="btn-salvar">+ Item</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
 
-        <section class="lista-dados" id="orcamentoListaSection">
-            <h1>Lista de Orçamentos</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Data</th>
-                        <th>Validade</th>
-                        <th>Valor Total</th>
-                        <th>Aprovado</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="orcamentoListaBody">
-                    <tr><td colspan="7" class="text-center">Pesquise para ver orçamentos.</td></tr>
-                </tbody>
-            </table>
-        </section>
+            <section class="lista-dados" id="orcamentoListaSection">
+                <h1>Lista de Orçamentos</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Data</th>
+                            <th>Validade</th>
+                            <th>Valor Total</th>
+                            <th>Aprovado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orcamentoListaBody">
+                        <tr>
+                            <td colspan="7" class="text-center">Pesquise para ver orçamentos.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
 
         </div><!-- /.orcamento-right-panel -->
     </main>
@@ -228,7 +237,8 @@
             <div id="itemProdutoSelecionado" class="item-selecionado hidden">
                 <div class="item-selecionado-info">
                     <span id="itemProdutoNome" class="item-produto-nome"></span>
-                    <button type="button" id="btnLimparProduto" class="btn-limpar-produto" title="Trocar produto">&times;</button>
+                    <button type="button" id="btnLimparProduto" class="btn-limpar-produto"
+                        title="Trocar produto">&times;</button>
                 </div>
                 <div class="linha">
                     <div class="campo">
@@ -259,6 +269,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="/src/js/supabase.js"></script>
+    <script src="/src/js/modal.js"></script>
     <script src="/src/js/orcamento.js"></script>
 
 </body>

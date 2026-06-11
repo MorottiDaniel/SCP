@@ -78,13 +78,13 @@ function renderModalClientes(clientes) {
 function openClienteModal(hiddenInput, selectedInput) {
     clienteHiddenAtual   = hiddenInput;
     clienteSelectedAtual = selectedInput;
-    clienteModal.classList.add('open');
+    abrirModal(clienteModal);
     clienteSearchInput.value = '';
     clienteSearchInput.focus();
 }
 
 function closeClienteModal() {
-    clienteModal.classList.remove('open');
+    fecharModal(clienteModal);
 }
 
 // ─── Pesquisa de orçamentos ───────────────────────────────────────────────────
@@ -120,7 +120,7 @@ function renderizarListaOrcamentos(orcamentos, emptyMessage = 'Nenhum orçamento
             <td>${formatarData(oc.data_orcamento)}</td>
             <td>${formatarData(oc.data_validade)}</td>
             <td>${formatarValor(total)}</td>
-            <td style="text-align:center;">${oc.aprovado ? '✓' : '✕'}</td>
+            <td class="${oc.aprovado ? 'status-aprovado' : 'status-reprovado'}">${oc.aprovado ? '✓' : '✕'}</td>
             <td><button type="button" class="btn-editar">Editar</button></td>
         `;
         tr.querySelector('.btn-editar').addEventListener('click', () => carregarOrcamento(oc.orcamento_id));
@@ -283,8 +283,7 @@ async function openItemModal(index = null) {
         btnRemoverItem.classList.add('hidden');
     }
 
-    itemValorUnitario.disabled = false;
-    itemModal.classList.add('open');
+    abrirModal(itemModal);
 
     const produtos = await fetchProdutos();
     produtosCache  = produtos;
@@ -304,16 +303,13 @@ async function openItemModal(index = null) {
         itemValorUnitario.value    = formatarValor(precoAtual);
         itemValorUnitario.disabled = true;
         itemQuantidade.value       = item.quantidade;
-    } else {
-        itemValorUnitario.disabled = false;
     }
 }
 
 function closeItemModalFn() {
-    itemModal.classList.remove('open');
-    itemEditandoIndex          = null;
-    produtoSelecionado         = null;
-    itemValorUnitario.disabled = false;
+    fecharModal(itemModal);
+    itemEditandoIndex  = null;
+    produtoSelecionado = null;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -422,8 +418,8 @@ function limparFormulario() {
     if (orcamentoIdInput)     orcamentoIdInput.value     = '';
     if (clienteIdInput)       clienteIdInput.value       = '';
     if (clienteSelectedInput) clienteSelectedInput.value = '';
-    dataOrcamentoInput.value = hoje();
-    if (dataValidadeInput) dataValidadeInput.value = '';
+    dataOrcamentoInput.value = formatarData(hoje());
+    if (dataValidadeInput) dataValidadeInput.value = formatarData(dataValidadeDaqui(7));
     itensOrcamento = [];
     renderizarItens();
     atualizarBotoesEdicao();
@@ -451,7 +447,7 @@ async function carregarOrcamento(id) {
     orcamentoIdInput.value     = data.orcamento_id;
     clienteIdInput.value       = data.cliente_id;
     clienteSelectedInput.value = `${data.cliente_id} - ${data.cliente?.nome_cliente ?? ''}`;
-    dataOrcamentoInput.value   = data.data_orcamento;
+    dataOrcamentoInput.value   = formatarData(data.data_orcamento);
     orcamentoDataValidade = data.data_validade;
     orcamentoAprovado     = data.aprovado ?? false;
     if (dataValidadeInput)   dataValidadeInput.value       = formatarData(data.data_validade);
@@ -716,7 +712,7 @@ function gerarPdfOrcamento() {
     doc.text('Data:', L, 44);
     doc.text('Válido até:', R, 44);
     doc.setFont(undefined, 'normal');
-    doc.text(formatarData(dataOrcamentoInput.value), L + 14, 44);
+    doc.text(dataOrcamentoInput.value, L + 14, 44);
     doc.text(dataValidadeInput.value, R + 25, 44);
 
     // Linha 3: Status
@@ -754,7 +750,8 @@ function gerarPdfOrcamento() {
 
 window.addEventListener('DOMContentLoaded', async function () {
 
-    dataOrcamentoInput.value = hoje();
+    dataOrcamentoInput.value = formatarData(hoje());
+    if (dataValidadeInput) dataValidadeInput.value = formatarData(dataValidadeDaqui(7));
     renderizarItens();
     atualizarBotoesEdicao();
     limparPesquisaOrcamento();
@@ -787,7 +784,7 @@ window.addEventListener('DOMContentLoaded', async function () {
         abrirClienteModal(pesquisarClienteIdInput, pesquisarClienteSelectedInput));
 
     document.getElementById('closeClienteModal')?.addEventListener('click', closeClienteModal);
-    clienteModal?.addEventListener('click', e => { if (e.target === clienteModal) closeClienteModal(); });
+    configurarOverlayClose(clienteModal, closeClienteModal);
 
     clienteSearchInput?.addEventListener('input', async e => {
         const filtro = e.target.value.trim().toLowerCase();
@@ -808,10 +805,6 @@ window.addEventListener('DOMContentLoaded', async function () {
 
     // ── Modal de item ─────────────────────────────────────────────────────────
 
-    itemValorUnitario?.addEventListener('input', function () {
-        this.value = mascararValorInput(this.value);
-    });
-
     pesquisarValorTotalInput?.addEventListener('input', function () {
         this.value = mascararValorInput(this.value);
     });
@@ -820,7 +813,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
     document.getElementById('closeItemModal')?.addEventListener('click', closeItemModalFn);
     document.getElementById('btnCancelarItem')?.addEventListener('click', closeItemModalFn);
-    itemModal?.addEventListener('click', e => { if (e.target === itemModal) closeItemModalFn(); });
+    configurarOverlayClose(itemModal, closeItemModalFn);
 
     document.getElementById('btnLimparProduto')?.addEventListener('click', limparSelecaoProduto);
 
